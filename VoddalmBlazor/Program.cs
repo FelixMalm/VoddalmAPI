@@ -19,8 +19,8 @@ namespace VoddalmBlazor
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7078/") });
             builder.Services.AddScoped<ILocalFileStorageService, LocalFileStorageService>();
 
-            builder.Services.AddAuthenticationCore();
-            builder.Services.AddHttpClient("YourAPI", client => client.BaseAddress = new Uri("https://localhost:7078/"));
+            //builder.Services.AddAuthenticationCore();
+            //builder.Services.AddHttpClient("YourAPI", client => client.BaseAddress = new Uri("https://localhost:7078/"));
 
 
             await builder.Build().RunAsync();

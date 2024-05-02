@@ -4,7 +4,7 @@ using VoddalmAPI.Data.Models;
 
 namespace VoddalmAPI.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<Broker>
     {
 
         public DbSet<Housing> Housing { get; set; }

@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace VoddalmAPI.Data.Models
 {
-    public class Broker //Author Kim
+    public class Broker : IdentityUser //Author Kim
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
