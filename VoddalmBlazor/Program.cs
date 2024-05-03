@@ -16,12 +16,10 @@ namespace VoddalmBlazor
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7078/") });
-            builder.Services.AddScoped<ILocalFileStorageService, LocalFileStorageService>();
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7046/") });
 
             //builder.Services.AddAuthenticationCore();
-            //builder.Services.AddHttpClient("YourAPI", client => client.BaseAddress = new Uri("https://localhost:7078/"));
-
+            //builder.Services.AddHttpClient("YourAPI", client => client.BaseAddress = new Uri("https://localhost:7046/"));
 
             await builder.Build().RunAsync();
         }
