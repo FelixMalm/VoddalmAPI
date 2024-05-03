@@ -9,7 +9,6 @@
   <ItemGroup>
     <None Include="Layout\MainLayout.razor" />
     <None Include="Layout\NavMenu.razor" />
-    <None Include="Pages\Counter.razor" />
     <None Include="Pages\Home.razor" />
   </ItemGroup>
 

@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VoddalmAPI.Data.Models;
 
 namespace VoddalmAPI.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<Broker>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
 
         public DbSet<Housing> Housing { get; set; }

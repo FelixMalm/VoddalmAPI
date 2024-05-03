@@ -10,7 +10,7 @@ using static VoddalmAPI.Data.Models.ServiceResponses;
 namespace VoddalmAPI.Data.Repositories
 {
     public class AccountRepository(
-        UserManager<Broker> userManager,
+        UserManager<IdentityUser> userManager,
         RoleManager<IdentityRole> roleManager,
         IConfiguration config)
         : IUserAccount
@@ -18,12 +18,11 @@ namespace VoddalmAPI.Data.Repositories
         public async Task<GeneralResponse> CreateAccount(UserDTO userDTO)
         {
             if (userDTO is null) return new GeneralResponse(false, "Model is empty");
-            var newUser = new Broker()
+            var newUser = new IdentityUser()
             {
-                FirstName = userDTO.Name,
+                UserName = userDTO.Name,
                 Email = userDTO.Email,
                 PasswordHash = userDTO.Password,
-                UserName = userDTO.Email
             };
             var user = await userManager.FindByEmailAsync(newUser.Email);
             if (user is not null) return new GeneralResponse(false, "User registered already");
@@ -63,7 +62,7 @@ namespace VoddalmAPI.Data.Repositories
                 return new LoginResponse(false, null!, "Invalid email/password");
 
             var getUserRole = await userManager.GetRolesAsync(getUser);
-            var userSession = new UserSession(getUser.Id, getUser.FirstName, getUser.Email, getUserRole.First());
+            var userSession = new UserSession(getUser.Id, getUser.UserName, getUser.Email, getUserRole.First());
             string token = GenerateToken(userSession);
             return new LoginResponse(true, token!, "Login complete");
         }
