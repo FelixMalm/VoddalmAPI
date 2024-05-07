@@ -1,0 +1,66 @@
+﻿.associated-housings {
+    margin-top: 5rem;
+}
+
+.housing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+
+.housing-item {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.housing-info {
+    padding: 15px;
+}
+
+    .housing-info h5 {
+        margin-bottom: 10px;
+    }
+
+    .housing-info p {
+        margin: 0;
+    }
+
+.broker-info {
+    display: flex;
+    align-items: center;
+}
+
+.broker-text {
+    flex: 1;
+    margin-left: 10rem; /* Adjusted margin */
+    margin-right: 10rem;
+    padding: 10px; /* Adjusted padding */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .broker-text ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .broker-text li {
+        margin-bottom: 5px; /* Reduced margin between list items */
+    }
+
+        .broker-text li strong {
+            margin-right: 5px;
+        }
+
+.broker-details {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

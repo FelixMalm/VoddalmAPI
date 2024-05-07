@@ -1,0 +1,69 @@
+﻿.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.agency-details {
+    display: flex;
+    gap: 20px;
+}
+
+.section {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+    .section h4 {
+        margin-bottom: 10px;
+    }
+
+    .section ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+        .section ul li {
+            margin-bottom: 10px;
+        }
+
+            .section ul li strong {
+                margin-right: 5px;
+            }
+
+.agency-logo {
+    max-width: 150px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.broker-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.broker-item {
+    flex-basis: calc(33.33% - 20px);
+}
+
+.broker-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+    .broker-info img {
+        max-width: 100px;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+    }

@@ -2,9 +2,10 @@
 @using System.Net.Http
 @inject HttpClient httpClient
 @using System.Net.Http.Json
+@using Microsoft.AspNetCore.Authorization
 @using VoddalmBlazor.Models
 @inject NavigationManager NavigationManager
-
+@attribute [Authorize(Roles = "Admin")]
 
 <h3>Add Housing</h3>
 
@@ -61,7 +62,7 @@
             <option value="">Select Broker</option>
             @if (brokers != null)
             {
-                @foreach (var broker in brokers)
+                @foreach (var broker in brokers.DistinctBy(b => b.id))
                 {
                     <option value="@broker.id">@broker.firstName @broker.lastName</option>
                 }
@@ -79,7 +80,7 @@
             <option value="">Select Municipality</option>
             @if (housingList != null)
             {
-                @foreach (var municipality in housingList)
+                @foreach (var municipality in housingList.DistinctBy(b => b.municipalityId))
                 {
                     if (municipality != null && municipality.municipality != null)
                     {
@@ -100,7 +101,7 @@
             <option value="">Select Category</option>
             @if (housingList != null)
             {
-                @foreach (var category in housingList)
+                @foreach (var category in housingList.DistinctBy(b => b.categoryId))
                 {
                     if (category != null && category.category != null)
                     {
@@ -122,12 +123,12 @@
 
     @* @if (imageUrl != null)
     {
-        @foreach (var image in housing.Images)
-        {
-            <div>
-                <img src="@image" alt="Housing Image">
-            </div>
-        }
+    @foreach (var image in housing.Images)
+    {
+    <div>
+    <img src="@image" alt="Housing Image">
+    </div>
+    }
     } *@
 
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -138,7 +139,7 @@
     private string imageUrl;
     private string errorMessage;
 
-    private List<Broker> brokers; 
+    private List<Broker> brokers;
     private List<Housing> housingList;
 
     protected override async Task OnInitializedAsync()
