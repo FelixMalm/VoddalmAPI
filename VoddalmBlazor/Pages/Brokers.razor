@@ -4,8 +4,6 @@
 @using VoddalmBlazor.Models
 @inject HttpClient httpClient
 
-<!-- Author Kim Jonsson -->
-
 <h1>Brokers</h1>
 
 @if (brokerList == null)
@@ -14,22 +12,23 @@
 }
 else
 {
-    @foreach (var broker in brokerList)
-    {
-        <div class="broker-list">
-            <div class="broker-image">
-                <a href="@($"BrokerDetails/{broker.id}")">
-                    <img src="@broker.imageUrl" alt="Broker Image" width="50" height="50" />
-                </a>
-            </div>
+    <div class="broker-list">
+        @foreach (var broker in brokerList)
+        {
+            <div class="broker-item">
+                <div class="broker-image">
+                    <a href="@($"BrokerDetails/{broker.id}")">
+                        <img src="@broker.imageUrl" alt="Broker Image" />
+                    </a>
+                </div>
 
-            <div class="broker-details">
-                <div><strong>Name:</strong> @broker.firstName @broker.lastName</div>
-                
-                <div><strong>Agency:</strong> <a href="@($"AgencyDetails/{broker.agency.id}")">@broker.agency.name</a></div>
+                <div class="broker-details">
+                    <div><strong>Name:</strong> @broker.firstName @broker.lastName</div>
+                    <div><strong>Agency:</strong> <a href="@($"AgencyDetails/{broker.agency.id}")">@broker.agency.name</a></div>
+                </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 }
 
 @code {

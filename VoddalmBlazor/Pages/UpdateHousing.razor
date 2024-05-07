@@ -1,0 +1,144 @@
+﻿@page "/UpdateHousing"
+@using System.Net.Http
+@using System.Text.Json
+@using VoddalmBlazor.Models
+@using System.Collections.Generic // Add this using directive
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager // Inject NavigationManager
+
+@if (housingList != null && housingList.Any())
+{
+    <div class="container">
+        <div class="row">
+            <!-- Display housing IDs -->
+            @foreach (var housingItem in housingList)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <button class="btn btn-link" @onclick="() => FillForm(housingItem)">
+                                    @housingItem.id
+                                </button>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>Sorry, there are no housing objects available.</p>
+}
+
+
+@if (housing != null)
+{
+    <!-- Form to update housing details -->
+    <h4>Update Housing Details</h4>
+    <form @onsubmit="HandleSubmit">
+        <!-- Input fields for housing details -->
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" @bind="housing.address" required>
+        </div>
+        <div class="form-group">
+            <label for="initialPrice">Initial Price</label>
+            <input type="number" class="form-control" id="initialPrice" @bind="housing.initialPrice" required>
+        </div>
+        <!-- Add more input fields for other properties -->
+        <div class="form-group">
+            <label for="municipality">Municipality</label>
+            <select class="form-control" id="municipality" @bind="housing.municipalityId">
+                @foreach (var municipality in housingList.Select(h => h.municipality).Distinct())
+                {
+                    <option value="@municipality.id">@municipality.name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" @bind="housing.categoryId">
+                @foreach (var category in housingList.Select(h => h.category).Distinct())
+                {
+                    <option value="@category.id">@category.name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="images">Images (URLs)</label>
+            <input type="text" class="form-control" id="images" @bind="imageUrls" />
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary">Update Housing</button>
+
+        <!-- Display error message if any -->
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger mt-3" role="alert">
+                @errorMessage
+            </div>
+        }
+    </form>
+}
+
+@code {
+    private Housing housing;
+    private string errorMessage;
+    private List<Broker> brokers;
+    private List<Housing> housingList;
+    private string imageUrls; // Property to hold the current image URLs
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch data for dropdown lists from your API
+        brokers = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Broker");
+        housingList = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
+
+        // Check if the housing object is not null before initializing imageUrls
+        if (housing != null)
+        {
+            // Initialize the image URLs property with the current housing's image URLs
+            imageUrls = housing.Images != null ? string.Join(",", housing.Images) : "";
+        }
+    }
+
+
+
+    // Method to fill out the form with clicked housing object
+    private void FillForm(Housing clickedHousing)
+    {
+        housing = clickedHousing;
+
+        // Update the image URLs property when a housing object is selected
+        imageUrls = housing.Images != null ? string.Join(",", housing.Images) : "";
+    }
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            // Split the string into individual URLs
+            var updatedImageUrls = imageUrls.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+            // Assign the list of URLs to the Images property
+            housing.Images = updatedImageUrls.ToList();
+
+            HttpResponseMessage response = await httpClient.PutAsJsonAsync($"https://localhost:7046/api/Housings/{housing.id}", housing);
+            response.EnsureSuccessStatusCode(); // Ensure success status code
+
+            // Set success message
+            errorMessage = "Housing details updated successfully!";
+        }
+        catch (Exception ex)
+        {
+            // Set error message
+            errorMessage = ex.Message;
+        }
+    }
+
+}
+

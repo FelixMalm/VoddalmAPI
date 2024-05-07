@@ -3,75 +3,98 @@
 @using System.Text.Json
 @using VoddalmBlazor.Models
 @inject HttpClient httpClient
-<!-- Author Kim Jonsson -->
-<head>
-    <title>Housing Details</title>
+@inject IJSRuntime JSRuntime
 
-    <script src="/JsFiles/slider.js"></script>
 
-</head>
-
-<div class="housing-details">
-    @if (housing != null)
-    {
-        <div class="text-section">
+<div class="container">
+    <div class="housing-details">
+        @if (housing != null)
+        {
             <div class="section">
                 <h4>Property Details</h4>
-                <ul>
-                    <li><strong>Address:</strong> @housing.address</li>
-                    <li><strong>Initial Price:</strong> @housing.initialPrice</li>
-                    <li><strong>Living Area:</strong> @housing.livingArea sqft</li>
-                    <li><strong>Additional Area:</strong> @housing.additionalArea sqft</li>
-                    <li><strong>Plot Area:</strong> @housing.plotArea sqft</li>
-                    <li><strong>Description:</strong> @housing.description</li>
-                </ul>
-            </div>
+                <div class="housing-info">
+                    @if (!string.IsNullOrEmpty(housing.address))
+                    {
+                        <div class="detail">
+                            <strong>Address:</strong> @housing.address
+                        </div>
+                    }
+                    <div class="detail">
+                        <strong>Initial Price:</strong> $@housing.initialPrice
+                    </div>
+                    <div class="detail">
+                        <strong>Living Area:</strong> @housing.livingArea
+                    </div>
+                    <div class="detail">
+                        <strong>Additional Area:</strong> @housing.additionalArea
+                    </div>
+                    <div class="detail">
+                        <strong>Plot Area:</strong> @housing.plotArea
+                    </div>
+                    <div class="detail">
+                        <strong>Description:</strong> @housing.description
+                    </div>
+                </div>
 
-            <div class="section">
                 <h4>Financial Details</h4>
-                <ul>
-                    <li><strong>Monthly Fee:</strong> $@housing.monthlyFee</li>
-                    <li><strong>Annual Operating Cost:</strong> $@housing.annualOperatingCost</li>
-                </ul>
-            </div>
-            <div class="section">
-                <h4>Other Details</h4>
-                <ul>
-                    <li><strong>Number of Rooms:</strong> @housing.numberOfRooms</li>
-                    <li><strong>Year Built:</strong> @housing.yearBuilt</li>
-                    <li><strong>Category:</strong> @housing.category.name</li>
-                    <li><strong>Broker:</strong> @housing.broker.firstName @housing.broker.lastName</li>
-                    <li><strong>Municipality:</strong> @housing.municipality.name</li>
-                </ul>
-            </div>
-        </div>
+                <div class="housing-info">
+                    <div class="detail">
+                        <strong>Monthly Fee:</strong> $@housing.monthlyFee
+                    </div>
+                    <div class="detail">
+                        <strong>Annual Operating Cost:</strong> $@housing.annualOperatingCost
+                    </div>
+                </div>
 
-        <div class="slider-section">
+                <h4>Other Details</h4>
+                <div class="housing-info">
+                    <div class="detail">
+                        <strong>Number of Rooms:</strong> @housing.numberOfRooms
+                    </div>
+                    <div class="detail">
+                        <strong>Year Built:</strong> @housing.yearBuilt
+                    </div>
+                    <div class="detail">
+                        <strong>Category:</strong> @housing.category.name
+                    </div>
+                    <div class="detail">
+                        <strong>Broker:</strong> @housing.broker.firstName @housing.broker.lastName
+                    </div>
+                    <div class="detail">
+                        <strong>Municipality:</strong> @housing.municipality.name
+                    </div>
+                </div>
+            </div>
+
             <div class="section">
                 <h4>Images</h4>
                 <div class="slider">
                     <div class="slides">
-                        @foreach (var image in housing.Images)
+                        @if (housing.Images != null && housing.Images.Any())
                         {
-                            <img src="@image" alt="Housing Image" class="slide">
+                            <img src="@housing.Images[currentImageIndex]" alt="Housing Image" class="slide housing-image">
+                        }
+                        else
+                        {
+                            <p>No images available</p>
                         }
                     </div>
-                    <button class="prev" onclick="prevSlide()">❮</button>
-                    <button class="next" onclick="nextSlide()">❯</button>
+                    <button class="prev" @onclick="PrevSlide">❮</button>
+                    <button class="next" @onclick="NextSlide">❯</button>
                 </div>
             </div>
-        </div>
-    }
-    else
-    {
-        <p>Loading...</p>
-    }
+
+        }
+        else
+        {
+            <p>Loading...</p>
+        }
+    </div>
 </div>
-
-
 
 @code {
     private Housing housing;
+    private int currentImageIndex = 0;
 
     [Parameter]
     public string HousingId { get; set; }
@@ -89,5 +112,15 @@
                 Console.WriteLine($"Error fetching housing details: {ex.Message}");
             }
         }
+    }
+
+    private void PrevSlide()
+    {
+        currentImageIndex = (currentImageIndex - 1 + housing.Images.Count) % housing.Images.Count;
+    }
+
+    private void NextSlide()
+    {
+        currentImageIndex = (currentImageIndex + 1) % housing.Images.Count;
     }
 }

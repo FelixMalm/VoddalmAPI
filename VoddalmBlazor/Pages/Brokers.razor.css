@@ -1,20 +1,18 @@
-﻿/* Brokers.razor.css */
-
-.broker-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+﻿.broker-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Three brokers per row */
+    gap: 20px; /* Add gap between broker items */
+    justify-items: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
     text-align: center;
 }
 
 .broker-item {
-    margin-bottom: 30px;
     padding: 20px;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -43,8 +41,10 @@
         }
 
 .broker-image img {
-    width: 300px;
-    height: 300px;
+    width: 100%; /* Ensure image fills its container */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 200px; /* Limit image width */
+    max-height: 200px; /* Limit image height */
     border-radius: 50%;
     object-fit: cover;
 }

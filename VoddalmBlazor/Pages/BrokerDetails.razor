@@ -4,74 +4,69 @@
 @using VoddalmBlazor.Models
 @inject HttpClient httpClient
 @inject NavigationManager navigationManager
+
 <!-- Author Kim Jonsson -->
-<style>
-    .section {
-        margin-bottom: 20px;
-    }
-
-    .housing-image {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 5rem;
-    }
-</style>
-
-
 @if (broker == null)
 {
     <p>Loading...</p>
 }
 else
 {
-    <div class="broker-details">
-        <div class="section">
-            <h4>Broker Details</h4>
-            <ul>
-                <li><strong>Name:</strong> @broker.firstName @broker.lastName</li>
-                <li><strong>Email:</strong> @broker.email</li>
-                <li><strong>Phone Number:</strong> @broker.phoneNumber</li>
-                <li><strong>Agency:</strong> @broker.agency.name</li>
-            </ul>
+
+    <div class="container">
+        <h4>Broker Details</h4>
+        <div class="broker-details">
+            <div class="section">
+
+                <div class="broker-info">
+                    @if (!string.IsNullOrEmpty(broker.imageUrl))
+                    {
+                        <img src="@broker.imageUrl" alt="Broker Image" />
+                    }
+                    else
+                    {
+                        <p>No image available</p>
+                    }
+                    <div class="broker-text">
+                        <ul>
+                            <li><strong>Name:</strong> @broker.firstName @broker.lastName</li>
+                            <li><strong>Email:</strong> @broker.email</li>
+                            <li><strong>Phone Number:</strong> @broker.phoneNumber</li>
+                            <li><strong>Agency:</strong> @broker.agency.name</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="section">
-            <h4>Image</h4>
-            @if (!string.IsNullOrEmpty(broker.imageUrl))
-            {
-                <img src="@broker.imageUrl" alt="Broker Image" />
-            }
-            else
-            {
-                <p>No image available</p>
-            }
-        </div>
-        <div class="section">
-            <h4>Associated Housing</h4>
-            @if (associatedHousing != null)
-            {
-                <p>Address: @associatedHousing.address</p>
-                @if (associatedHousing.Images != null && associatedHousing.Images.Count > 0)
+        <div class="associated-housings">
+            <h4>Associated Housings</h4>
+            <div class="housing-grid">
+                @foreach (var housing in associatedHousings)
                 {
-                    <a href="@($"HousingDetails/{associatedHousing.id}")">
-                        <img src="@associatedHousing.Images[0]" alt="Housing Image" class="housing-image" />
-                    </a>
+                    <div class="housing-item">
+                        <div class="housing-info">
+                            <h5>Address: @housing.address</h5>
+                            @if (housing.Images != null && housing.Images.Any())
+                            {
+                                <a href="@($"HousingDetails/{housing.id}")">
+                                    <img src="@housing.Images[0]" alt="Housing Image" />
+                                </a>
+                            }
+                            else
+                            {
+                                <p>No image available</p>
+                            }
+                        </div>
+                    </div>
                 }
-                else
-                {
-                    <p>No image available</p>
-                }
-            }
-            else
-            {
-                <p>No associated housing found</p>
-            }
+            </div>
         </div>
+
     </div>
 }
-
 @code {
     private Broker broker;
-    private Housing associatedHousing;
+    private List<Housing> associatedHousings;
 
     [Parameter]
     public string BrokerId { get; set; }
@@ -82,14 +77,11 @@ else
         {
             try
             {
-                
                 broker = await httpClient.GetFromJsonAsync<Broker>($"https://localhost:7046/api/Broker/{id}");
 
-                
-                var housings = await httpClient.GetFromJsonAsync<Housing[]>("https://localhost:7046/api/Housings");
+                var housings = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
 
-                
-                associatedHousing = housings.FirstOrDefault(h => h.brokerId == id);
+                associatedHousings = housings.Where(h => h.brokerId == id).ToList();
             }
             catch (Exception ex)
             {

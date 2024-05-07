@@ -7,8 +7,10 @@ function showSlide(index) {
     } else if (index < 0) {
         slideIndex = slides.length - 1;
     }
-    const offset = -slideIndex * 100;
-    document.querySelector('.slides').style.transform = `translateX(${offset}%)`;
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = 'none';
+    }
+    slides[slideIndex].style.display = 'block';
 }
 
 function prevSlide() {
@@ -18,6 +20,5 @@ function prevSlide() {
 function nextSlide() {
     showSlide(++slideIndex);
 }
-
 
 showSlide(slideIndex);

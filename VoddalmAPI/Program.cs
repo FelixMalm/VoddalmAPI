@@ -72,11 +72,12 @@ builder.Services.AddScoped<IUserAccount, AccountRepository>();
 
 var app = builder.Build();
 
-app.UseCors(builder =>
+// CORS configuration
+app.UseCors(policy =>
 {
-    builder.AllowAnyOrigin()
-           .AllowAnyHeader()
-           .AllowAnyMethod();
+    policy.AllowAnyOrigin()
+          .AllowAnyHeader()
+          .AllowAnyMethod();
 });
 
 if (app.Environment.IsDevelopment())

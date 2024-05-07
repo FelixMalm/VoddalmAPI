@@ -11,34 +11,44 @@
 }
 else
 {
-    <div class="agency-details">
-        <div class="section">
-            <h4>Agency Details</h4>
-            <ul>
-                <li><strong>Name:</strong> @agency.name</li>
-                <li><strong>Presentation:</strong> @agency.presentation</li>
-            </ul>
-            @if (!string.IsNullOrEmpty(agency.logoUrl))
-            {
-                <img src="@agency.logoUrl" alt="Agency Logo" class="agency-logo" />
-            }
-        </div>
-        <div class="section">
-            <h4>Brokers</h4>
-            <ul>
-                @foreach (var broker in agency.brokers)
+    <div class="container">
+        <div class="agency-details">
+            <div class="section">
+                <h4>Agency Details</h4>
+                <ul>
+                    <li><strong>Name:</strong> @agency.name</li>
+                    <li><strong>Presentation:</strong> @agency.presentation</li>
+                </ul>
+                @if (!string.IsNullOrEmpty(agency.logoUrl))
                 {
-                    <li>
-                        <a href="BrokerDetails/@broker.id">@broker.firstName @broker.lastName</a>
-                    </li>
+                    <img src="@agency.logoUrl" alt="Agency Logo" class="agency-logo" />
                 }
-            </ul>
+            </div>
+            <div class="section">
+                <h4>Brokers</h4>
+                <ul class="broker-list">
+                    @foreach (var broker in agency.brokers)
+                    {
+                        <li class="broker-item">
+                            <div class="broker-info">
+                                @if (!string.IsNullOrEmpty(broker.imageUrl))
+                                {
+                                    <img src="@broker.imageUrl" alt="Broker Image" />
+                                }
+                                else
+                                {
+                                    <p>No image available</p>
+                                }
+                                <div class="broker-text">
+                                    <a href="BrokerDetails/@broker.id">@broker.firstName @broker.lastName</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
-
-
-
-
 }
 
 @code {
