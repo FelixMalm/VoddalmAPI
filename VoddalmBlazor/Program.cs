@@ -1,11 +1,14 @@
-using Microsoft.AspNetCore.Components.Web;
+using BlazorWasmAuthentication.Handlers;
+using BlazorWasmAuthentication.Services;
+using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using VoddalmBlazor;
-using static VoddalmBlazor.Pages.AddHouse;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.Authorization;
+
 namespace VoddalmBlazor
 {
     public class Program
@@ -16,13 +19,20 @@ namespace VoddalmBlazor
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7046/") });
+            builder.Services.AddScoped<AuthenticationHandler>();
 
-            //builder.Services.AddAuthenticationCore();
-            //builder.Services.AddHttpClient("YourAPI", client => client.BaseAddress = new Uri("https://localhost:7046/"));
+            //builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+
+            builder.Services.AddHttpClient("ServerApi", client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration["ServerUrl"] ?? "https://localhost:7046/");
+            }).AddHttpMessageHandler<AuthenticationHandler>();
+
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+            builder.Services.AddBlazoredSessionStorage();
 
             await builder.Build().RunAsync();
         }
     }
 }
-

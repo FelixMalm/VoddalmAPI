@@ -1,0 +1,56 @@
+﻿@page "/register"
+@using VoddalmBlazor.Models
+@using BlazorWasmAuthentication.Services
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+
+<EditForm Model="@registerModel" OnValidSubmit="RegisterAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div>
+        <label for="Name">Name:</label>
+        <InputText type="Name" @bind-Value="@registerModel.Name" id="Name" name="Name" required />
+        <ValidationMessage For="@(() => registerModel.Name)" />
+    </div>
+    <div>
+        <label for="Email">Email:</label>
+        <InputText @bind-Value="@registerModel.Email" id="Email" name="Email" required />
+        <ValidationMessage For="@(() => registerModel.Email)" />
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <InputText type="password" @bind-Value="@registerModel.Password" id="password" name="password" required />
+        <ValidationMessage For="@(() => registerModel.Password)" />
+    </div>
+    <div>
+        <label for="ConfirmPassword">ConfirmPassword:</label>
+        <InputText type="password" @bind-Value="@registerModel.ConfirmPassword" id="ConfirmPassword" name="ConfirmPassword" required />
+        <ValidationMessage For="@(() => registerModel.ConfirmPassword)" />
+    </div>
+    <div>
+        <button type="submit">Register</button>
+    </div>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="error">@errorMessage</p>
+}
+
+@code {
+    private RegisterModel registerModel = new RegisterModel();
+    private string errorMessage;
+
+    private async Task RegisterAsync()
+    {
+        try
+        {
+            await AuthenticationService.RegisterAsync(registerModel);
+            NavigationManager.NavigateTo("/login");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+}
