@@ -78,4 +78,30 @@
         public int id { get; set; }
         public string name { get; set; }
     }
+    public class LoginModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+    public class LoginResponse
+    {
+        public string Token { get; set; }
+        public DateTime Expiration { get; set; }
+        public string RefreshToken { get; set; }
+        public bool Flag { get; set; }
+        public string Message { get; set; }
+    }
+
+    public class RefreshModel
+    {
+        public required string AccessToken { get; set; }
+        public required string RefreshToken { get; set; }
+    }
+    public class RegisterModel
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+    }
 }

@@ -12,7 +12,7 @@ using VoddalmAPI.Data;
 namespace VoddalmAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240506134935_init")]
+    [Migration("20240507161812_init")]
     partial class init
     {
         /// <inheritdoc />
