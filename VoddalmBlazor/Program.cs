@@ -21,7 +21,8 @@ namespace VoddalmBlazor
 
             builder.Services.AddScoped<AuthenticationHandler>();
 
-            //builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+            // Replace ServerAuthenticationStateProvider with RemoteAuthenticationStateProvider
+            //builder.Services.AddScoped<AuthenticationStateProvider, RemoteAuthenticationStateProvider>();
 
             builder.Services.AddHttpClient("ServerApi", client =>
             {
