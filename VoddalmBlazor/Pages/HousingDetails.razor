@@ -68,6 +68,8 @@
 
             <div class="section">
                 <h4>Images</h4>
+                <button class="prev" @onclick="PrevSlide">❮</button>
+                <button class="next" @onclick="NextSlide">❯</button>
                 <div class="slider">
                     <div class="slides">
                         @if (housing.Images != null && housing.Images.Any())
@@ -79,8 +81,7 @@
                             <p>No images available</p>
                         }
                     </div>
-                    <button class="prev" @onclick="PrevSlide">❮</button>
-                    <button class="next" @onclick="NextSlide">❯</button>
+
                 </div>
             </div>
 

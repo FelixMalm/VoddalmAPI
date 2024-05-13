@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
 using System.IO;
+using System.Linq; // Add this namespace for LINQ operations
 
 namespace BlazorWasmAuthentication.Services
 {
@@ -50,12 +51,25 @@ namespace BlazorWasmAuthentication.Services
             LoginChange?.Invoke(null);
         }
 
-        private static string GetUsername(string token)
+        public async Task<string?> GetCurrentUserEmailAsync()
+        {
+            var token = await GetJwtAsync();
+
+            if (string.IsNullOrEmpty(token))
+                return null;
+
+            return GetEmailFromToken(token);
+        }
+
+        private static string GetEmailFromToken(string token)
         {
             var jwt = new JwtSecurityToken(token);
 
-            return jwt.Claims.First(c => c.Type == ClaimTypes.Name).Value;
+            // Find the email claim using the standard claim type ClaimTypes.Email
+            return jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
         }
+
+
 
         public async Task<DateTime> LoginAsync(LoginModel model)
         {
@@ -73,10 +87,11 @@ namespace BlazorWasmAuthentication.Services
             await _sessionStorageService.SetItemAsync(JWT_KEY, content.Token);
             await _sessionStorageService.SetItemAsync(REFRESH_KEY, content.RefreshToken);
 
-            LoginChange?.Invoke(GetUsername(content.Token));
+            LoginChange?.Invoke(await GetCurrentUserEmailAsync()); // Invoke method to get email
 
             return content.Expiration;
         }
+
 
         public async Task<bool> RefreshAsync()
         {
@@ -108,7 +123,6 @@ namespace BlazorWasmAuthentication.Services
 
             return true;
         }
-        // Inside AuthenticationService.cs
 
         public async Task RegisterAsync(RegisterModel model)
         {

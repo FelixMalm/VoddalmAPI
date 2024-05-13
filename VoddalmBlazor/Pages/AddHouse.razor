@@ -118,25 +118,31 @@
 
     <div class="form-group">
         <label for="images">Images URLs</label>
-        <input type="text" class="form-control" @bind="imageUrl" id="images">
+        <input type="text" class="form-control" @bind="imageUrls" id="images">
     </div>
 
-    @* @if (imageUrl != null)
+    @if (!string.IsNullOrWhiteSpace(imageUrls))
     {
-    @foreach (var image in housing.Images)
-    {
-    <div>
-    <img src="@image" alt="Housing Image">
-    </div>
+        @foreach (var imageUrl in imageUrls.Split(','))
+        {
+            <div>
+                <img src="@imageUrl" alt="Housing Image">
+            </div>
+        }
     }
-    } *@
+    else
+    {
+        <div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg" alt="Default Housing Image">
+        </div>
+    }
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 @code {
     private Housing housing = new Housing();
-    private string imageUrl;
+    private string imageUrls;
     private string errorMessage;
 
     private List<Broker> brokers;
@@ -147,13 +153,16 @@
         // Fetch data for dropdown lists from your API
         brokers = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Broker");
         housingList = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
+
+        // Set default image URL
+        imageUrls = "https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg";
     }
 
     private async Task HandleSubmit()
     {
         try
         {
-            housing.Images.Add(imageUrl);
+            housing.Images = imageUrls?.Split(',').ToList();
             HttpResponseMessage response = await httpClient.PostAsJsonAsync("https://localhost:7046/api/Housings", housing);
             response.EnsureSuccessStatusCode(); // Ensure success status code
 
@@ -165,5 +174,4 @@
             errorMessage = ex.Message;
         }
     }
-
 }
