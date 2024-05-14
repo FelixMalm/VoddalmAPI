@@ -26,7 +26,7 @@ namespace VoddalmAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Broker>> GetBroker(int id)
+        public async Task<ActionResult<Broker>> GetBroker(string id)
         {
             var broker = await brokerRepo.GetBrokerByIdAsync(id);
             if (broker == null)
@@ -53,6 +53,8 @@ namespace VoddalmAPI.Controllers
                     Email = brokerDto.Email,
                     PhoneNumber = brokerDto.PhoneNumber,
                     ImageUrl = brokerDto.ImageUrl,
+                    UserName = brokerDto.Email,
+                    EmailConfirmed = true
                 };
 
                 if (brokerDto.AgencyId.HasValue)
@@ -78,7 +80,7 @@ namespace VoddalmAPI.Controllers
 
 
         [HttpPut("{id}")] //Author Felix
-        public async Task<IActionResult> PutBroker(int id, [FromBody] BrokerDto brokerDto)
+        public async Task<IActionResult> PutBroker(string id, [FromBody] BrokerDto brokerDto)
         {
             try
             {
@@ -111,7 +113,7 @@ namespace VoddalmAPI.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBroker(int id)
+        public async Task<IActionResult> DeleteBroker(string id)
         {
             var existingBroker = await brokerRepo.GetBrokerByIdAsync(id);
             if (existingBroker == null)

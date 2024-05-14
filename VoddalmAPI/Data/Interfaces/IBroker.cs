@@ -5,7 +5,7 @@ namespace VoddalmAPI.Data.Interfaces
 	public interface IBroker
     {
         Task<IEnumerable<Broker>> GetBrokersAsync();
-        Task<Broker> GetBrokerByIdAsync(int id);
+        Task<Broker> GetBrokerByIdAsync(string id);
         Task AddBrokerAsync(Broker broker);
         Task UpdateBrokerAsync(Broker broker);
         Task DeleteBrokerAsync(Broker broker);

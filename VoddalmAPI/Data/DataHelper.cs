@@ -1,11 +1,21 @@
-﻿using VoddalmAPI.Data.Models;
+﻿
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Data;
+using VoddalmAPI.Data.Models;
 
 namespace VoddalmAPI.Data
 {
     public static class SeedHelper //Author Kim Jonsson
     {
+        
+
+       
+
         public static async Task DataHelper(ApplicationDbContext context)
         {
+            
+            var hasher = new PasswordHasher<Broker>();
             if (!context.Broker.Any())
             {
                 // Create Agency instances
@@ -32,103 +42,155 @@ namespace VoddalmAPI.Data
 
                 var broker1 = new Broker
                 {
-                    FirstName = "John",
-                    LastName = "Doe",
-                    Email = "john.doe@example.com",
+                    UserName = "Mike.Oxlong@example.com",
+                    Email = "Mike.Oxlong@example.com",
                     PhoneNumber = "123-456-7890",
+                    FirstName = "Mike",
+                    LastName = "Oxlong",
                     ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/16/91/1691d7d43132f638d416b814532bc989.jpg",
-                    Agency = agency1
+                    Agency = agency1,
+                    EmailConfirmed = true,
+                    NormalizedUserName = "MIKE.OXLONG@EXAMPLE.COM",
+                    NormalizedEmail = "MIKE.OXLONG@EXAMPLE.COM",
+                    PasswordHash = hasher.HashPassword(null, "!Hej123!")
                 };
 
                 var broker2 = new Broker
                 {
-                    FirstName = "Emily",
-                    LastName = "Smith",
-                    Email = "emily.smith@example.com",
+                    UserName = "Mike.Litoris@example.com",
+                    Email = "Mike.Litoris@example.com",
                     PhoneNumber = "234-567-8901",
+                    FirstName = "Mike",
+                    LastName = "Litoris",
                     ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/f5/da/f5da602bc40d3fdaedaa2412398deba3.jpg",
-                    Agency = agency1
+                    Agency = agency1,
+                    EmailConfirmed = true,
+                    NormalizedUserName = "MIKE.LITORIS@EXAMPLE.COM",
+                    NormalizedEmail = "MIKE.LITORIS@EXAMPLE.COM",
+                    PasswordHash = hasher.HashPassword(null, "!Hej123!")
                 };
 
                 var broker3 = new Broker
                 {
-                    FirstName = "Michael",
-                    LastName = "Johnson",
-                    Email = "michael.johnson@example.com",
+                    UserName = "Oliver.Klozoff@example.com",
+                    Email = "Oliver.Klozoff@example.com",
                     PhoneNumber = "345-678-9012",
+                    FirstName = "Oliver",
+                    LastName = "Klozoff",
                     ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/22/05/2205a46acb2ce4570505ffa72f8d8df0.png",
-                    Agency = agency2
+                    Agency = agency2,
+                    EmailConfirmed = true,
+                    NormalizedUserName = "OLIVER.KLOZOFF@EXAMPLE.COM",
+                    NormalizedEmail = "OLIVER.KLOZOFF@EXAMPLE.COM",
+                    PasswordHash = hasher.HashPassword(null, "!Hej123!")
                 };
 
                 var broker4 = new Broker
                 {
-                    FirstName = "Jessica",
-                    LastName = "Brown",
-                    Email = "jessica.brown@example.com",
+                    UserName = "Jenna.Toll@example.com",
+                    Email = "Jenna.Toll@example.com",
                     PhoneNumber = "456-789-0123",
+                    FirstName = "Jenna",
+                    LastName = "Toll",
                     ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/8a/07/8a0797543b3d208e789583211d4e091a.jpg",
-                    Agency = agency2
+                    Agency = agency2,
+                    EmailConfirmed = true,
+                    NormalizedUserName = "JENNA.TOLL@EXAMPLE.COM",
+                    NormalizedEmail = "JENNA.TOLL@EXAMPLE.COM",
+                    PasswordHash = hasher.HashPassword(null, "!Hej123!")
                 };
 
                 var broker5 = new Broker
                 {
+                    UserName = "David.Martinez@example.com",
+                    Email = "David.Martinez@example.com",
+                    PhoneNumber = "567-890-1234",
                     FirstName = "David",
                     LastName = "Martinez",
-                    Email = "david.martinez@example.com",
-                    PhoneNumber = "567-890-1234",
                     ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/3f/87/3f87ed4178955da1f8f699c1b27f4033.jpg",
-                    Agency = agency2
+                    Agency = agency2,
+                    EmailConfirmed = true,
+                    NormalizedUserName = "DAVID.MARTINEZ@EXAMPLE.COM",
+                    NormalizedEmail = "DAVID.MARTINEZ@EXAMPLE.COM",
+                    PasswordHash = hasher.HashPassword(null, "!Hej123!")
                 };
 
                 var broker6 = new Broker
                 {
+                    UserName = "Jennifer.Garcia@example.com",
+                    Email = "Jennifer.Garcia@example.com",
+                    PhoneNumber = "678-901-2345",
                     FirstName = "Jennifer",
                     LastName = "Garcia",
-                    Email = "jennifer.garcia@example.com",
-                    PhoneNumber = "678-901-2345",
                     ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/b2/4e/b24e75cdd8f1d95e25321da17607058c.jpg",
-                    Agency = agency3
+                    Agency = agency3,
+                    EmailConfirmed = true,
+                    NormalizedUserName = "JENNIFER.GARCIA@EXAMPLE.COM",
+                    NormalizedEmail = "JENNIFER.GARCIA@EXAMPLE.COM",
+                    PasswordHash = hasher.HashPassword(null, "!Hej123!")
                 };
 
                 var broker7 = new Broker
                 {
-                    FirstName = "Christopher",
-                    LastName = "Wilson",
-                    Email = "christopher.wilson@example.com",
+                    UserName = "Seymour.Butts@example.com",
+                    Email = "Seymour.Butts@example.com",
                     PhoneNumber = "789-012-3456",
+                    FirstName = "Seymour",
+                    LastName = "Butts",
                     ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/da/73/da73431cec8b93e979ebea305ef6675c.jpg",
-                    Agency = agency3
+                    Agency = agency3,
+                    EmailConfirmed = true,
+                    NormalizedUserName = "SEYMOUR.BUTTS@EXAMPLE.COM",
+                    NormalizedEmail = "SEYMOUR.BUTTS@EXAMPLE.COM",
+                    PasswordHash = hasher.HashPassword(null, "!Hej123!")
                 };
 
                 var broker8 = new Broker
                 {
+                    UserName = "Ashley.Anderson@example.com",
+                    Email = "Ashley.Anderson@example.com",
+                    PhoneNumber = "890-123-4567",
                     FirstName = "Ashley",
                     LastName = "Anderson",
-                    Email = "ashley.anderson@example.com",
-                    PhoneNumber = "890-123-4567",
                     ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/7b/82/7b82dcc7354c9f67c4a4da81675ce89f.jpg",
-                    Agency = agency3
+                    Agency = agency3,
+                    EmailConfirmed = true,
+                    NormalizedUserName = "ASHLEY.ANDERSON@EXAMPLE.COM",
+                    NormalizedEmail = "ASHLEY.ANDERSON@EXAMPLE.COM",
+                    PasswordHash = hasher.HashPassword(null, "!Hej123!")
                 };
 
                 var broker9 = new Broker
                 {
+                    UserName = "Matthew.Taylor@example.com",
+                    Email = "Matthew.Taylor@example.com",
+                    PhoneNumber = "901-234-5678",
                     FirstName = "Matthew",
                     LastName = "Taylor",
-                    Email = "matthew.taylor@example.com",
-                    PhoneNumber = "901-234-5678",
                     ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/10/8d/108de1efe4f487cefd817d47cb0b6f66.jpg",
-                    Agency = agency3
+                    Agency = agency3,
+                    EmailConfirmed = true,
+                    NormalizedUserName = "MATTHEW.TAYLOR@EXAMPLE.COM",
+                    NormalizedEmail = "MATTHEW.TAYLOR@EXAMPLE.COM",
+                    PasswordHash = hasher.HashPassword(null, "!Hej123!")
                 };
 
                 var broker10 = new Broker
                 {
+                    UserName = "Jessica.Thomas@example.com",
+                    Email = "Jessica.Thomas@example.com",
+                    PhoneNumber = "012-345-6789",
                     FirstName = "Jessica",
                     LastName = "Thomas",
-                    Email = "jessica.thomas@example.com",
-                    PhoneNumber = "012-345-6789",
                     ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/1b/92/1b9206e0d8fc0a6e7bbb75400172e85d.jpg",
-                    Agency = agency3
+                    Agency = agency3,
+                    EmailConfirmed = true,
+                    NormalizedUserName = "JESSICA.THOMAS@EXAMPLE.COM",
+                    NormalizedEmail = "JESSICA.THOMAS@EXAMPLE.COM",
+                    PasswordHash = hasher.HashPassword(null, "!Hej123!")
                 };
+
+
 
                 var municipality1 = new Municipality { Name = "Ale" };
                 var municipality2 = new Municipality { Name = "Alingsås" };

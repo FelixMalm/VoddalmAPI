@@ -30,7 +30,7 @@
 
     public class Broker
     {
-        public int id { get; set; }
+        public string id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
@@ -59,7 +59,7 @@
 
     public class Broker1
     {
-        public int id { get; set; }
+        public string id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
@@ -103,5 +103,6 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+        
     }
 }

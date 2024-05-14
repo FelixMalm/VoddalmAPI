@@ -73,15 +73,19 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        if (!string.IsNullOrEmpty(BrokerId) && int.TryParse(BrokerId, out int id))
+        if (!string.IsNullOrEmpty(BrokerId))
         {
+            string id = BrokerId; // Assign BrokerId directly to id
+
             try
             {
                 broker = await httpClient.GetFromJsonAsync<Broker>($"https://localhost:7046/api/Broker/{id}");
 
                 var housings = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
 
-                associatedHousings = housings.Where(h => h.brokerId == id).ToList();
+                associatedHousings = housings.Where(h => h.brokerId.ToString() == id).ToList();
+
+
             }
             catch (Exception ex)
             {
@@ -89,4 +93,5 @@ else
             }
         }
     }
+}
 }

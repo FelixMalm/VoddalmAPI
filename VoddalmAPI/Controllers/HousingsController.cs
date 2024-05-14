@@ -38,7 +38,7 @@ namespace VoddalmAPI.Controllers
             return Ok(housing);
         }
 
-        [HttpPost] //Author Felix
+        [HttpPost] // Author Felix
         public async Task<ActionResult<Housing>> PostHousing([FromBody] HousingDto housingDto)
         {
             try
@@ -68,9 +68,9 @@ namespace VoddalmAPI.Controllers
 
                 Console.WriteLine($"Images received: {string.Join(", ", housingDto.Images)}");
 
-                if (housingDto.BrokerId.HasValue)
+                if (!string.IsNullOrEmpty(housingDto.BrokerId))
                 {
-                    var broker = await brokerRepo.GetBrokerByIdAsync(housingDto.BrokerId.Value);
+                    var broker = await brokerRepo.GetBrokerByIdAsync(housingDto.BrokerId);
                     if (broker == null)
                     {
                         return BadRequest("Invalid broker Id");
@@ -89,7 +89,7 @@ namespace VoddalmAPI.Controllers
         }
 
 
-        [HttpPut("{id}")] //Author Felix
+        [HttpPut("{id}")] // Author Felix
         public async Task<IActionResult> PutHousing(int id, [FromBody] HousingDto housingDto)
         {
             try
@@ -116,7 +116,7 @@ namespace VoddalmAPI.Controllers
                 housing.AnnualOperatingCost = housingDto.AnnualOperatingCost;
                 housing.YearBuilt = housingDto.YearBuilt;
                 housing.CategoryId = housingDto.CategoryId;
-                housing.BrokerId = housingDto.BrokerId ?? default(int);
+                housing.BrokerId = housingDto.BrokerId; // Assigning directly as BrokerId is already a string
                 housing.MunicipalityId = housingDto.MunicipalityId;
 
                 await housingRepo.UpdateHousingAsync(housing);
@@ -128,6 +128,8 @@ namespace VoddalmAPI.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+
 
 
         [HttpDelete("{id}")]
@@ -162,7 +164,7 @@ namespace VoddalmAPI.Controllers
         public double AnnualOperatingCost { get; set; }
         public int YearBuilt { get; set; }
         public int CategoryId { get; set; }
-        public int? BrokerId { get; set; }
+        public string? BrokerId { get; set; }
         public int MunicipalityId { get; set; }
         public List<string> Images { get; set; }
     }

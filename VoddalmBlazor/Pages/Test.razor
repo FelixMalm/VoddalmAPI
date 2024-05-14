@@ -1,0 +1,48 @@
+﻿@* @page "/test"
+@using VoddalmBlazor.Models
+@inject BlazorWasmAuthentication.Services.AuthenticationService AuthenticationService
+
+
+@using System.Net.Http
+@using System.Text.Json
+
+@inject HttpClient httpClient
+@inject BlazorWasmAuthentication.Services.AuthenticationService AuthenticationService
+
+<h3>Current User's Connected Broker</h3>
+
+@if (currentUserBroker != null)
+{
+    <p>Connected Broker Name: @currentUserBroker.firstName</p>
+}
+else
+{
+    <p>No connected broker found for the current user.</p>
+}
+
+@code {
+    private Broker[] brokerList;
+    private Broker currentUserBroker;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Fetch the list of brokers
+            brokerList = await httpClient.GetFromJsonAsync<Broker[]>("https://localhost:7046/api/Broker");
+
+            // Retrieve the userId of the logged-in user
+            var userId = await AuthenticationService.GetCurrentUserIdAsync();
+
+            // Find the Broker associated with the logged-in user's UserId
+            currentUserBroker = brokerList.FirstOrDefault(broker => broker.id == userId);
+        }
+        catch (Exception ex)
+        {
+            // Handle exception (e.g., log, display error message)
+            Console.WriteLine($"Error fetching brokers: {ex.Message}");
+        }
+    }
+}
+
+ *@
