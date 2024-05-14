@@ -43,9 +43,9 @@ else
                 <a href="HousingDetails/@housing.id.ToString()">
                     <div class="card-container">
                         <div class="image-container">
-                            @if (housing.Images.Any())
+                            @if (housing.images.Any())
                             {
-                                <img src="@housing.Images.First()" alt="Housing Image" />
+                                <img src="@housing.images.First()" alt="Housing Image" />
                             }
                             else
                             {
@@ -58,7 +58,7 @@ else
                                 <li><strong>Initial Price:</strong> <span>@housing.initialPrice</span></li>
                                 <li><strong>Living Area:</strong> <span>@housing.livingArea</span></li>
                                 <li><strong>Agency:</strong> <a href="AgencyDetails/@housing.broker.agency.id.ToString()">@housing.broker.agency.name</a></li>
-                                <li><strong>Broker:</strong> <a href="BrokerDetails/@housing.broker.id.ToString()">@housing.broker.firstName @housing.broker.lastName</a></li>
+                                <li><strong>Broker:</strong> <a href="BrokerDetails/@housing.broker.id">@housing.broker.firstName @housing.broker.lastName</a></li>
                             </ul>
                             @if (!string.IsNullOrEmpty(housing.broker.agency.logoUrl))
                             {
@@ -73,28 +73,35 @@ else
 }
 
 @code {
-    private Housing[] housingList;
-    private Broker[] brokerList;
-    private Agency[] agencyList;
+    private List<Housing> housingList;
+    private List<Broker> brokerList;
+    private List<Agency> agencyList;
     private string searchTerm = "";
     private string selectedMunicipality = "";
     private string selectedCategory = "";
     private string[] municipalities = { "Ale", "Alingsås", "Alvesta", "Aneby", "Arboga" };
     private string[] categories = { "Apartment", "Villas", "New production", "Leisure house" };
 
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            housingList = await httpClient.GetFromJsonAsync<Housing[]>("https://localhost:7046/api/Housings");
-            brokerList = await httpClient.GetFromJsonAsync<Broker[]>("https://localhost:7046/api/Broker");
-            agencyList = await httpClient.GetFromJsonAsync<Agency[]>("https://localhost:7046/api/Agency");
+            // Fetch data for housings
+            housingList = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
+
+            // Fetch data for brokers
+            brokerList = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Brokers");
+
+            // Fetch data for agencies
+            agencyList = await httpClient.GetFromJsonAsync<List<Agency>>("https://localhost:7046/api/Agencies");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error fetching data: {ex.Message}");
         }
     }
+
 
     private IEnumerable<Housing> filteredHousings
     {

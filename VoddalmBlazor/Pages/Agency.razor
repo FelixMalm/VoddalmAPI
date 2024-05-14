@@ -5,7 +5,6 @@
 @inject HttpClient httpClient
 
 <!-- Author Felix -->
-
 @if (agencyList == null)
 {
     <p>Loading...</p>
@@ -13,14 +12,14 @@
 else
 {
     <div class="agency-list">
-        @foreach (var agency in agencyList)
+        @foreach (var agencies in agencyList)
         {
             <div class="agency-item">
                 <div class="card-container">
                     <div class="image-container">
-                        @if (!string.IsNullOrEmpty(agency.logoUrl))
+                        @if (!string.IsNullOrEmpty(agencies.logoUrl))
                         {
-                            <img src="@agency.logoUrl" alt="Agency Logo" class="agency-logo" />
+                            <img src="@agencies.logoUrl" alt="Agency Logo" class="agency-logo" />
                         }
                         else
                         {
@@ -29,11 +28,11 @@ else
                     </div>
                     <div class="info-container">
                         <ul>
-                            <li><strong>Company:</strong> @agency.name</li>
-                            <li><strong>Presentation:</strong> @agency.presentation</li>
+                            <li><strong>Company:</strong> @agencies.name</li>
+                            <li><strong>Presentation:</strong> @agencies.presentation</li>
                             <li><strong>Brokers:</strong></li>
                             <ul>
-                                @foreach (var broker in agency.brokers)
+                                @foreach (var broker in agencies.brokers)
                                 {
                                     <li>@broker.firstName @broker.lastName</li>
                                 }
@@ -47,16 +46,17 @@ else
 }
 
 
+
 @code {
-    private Agency1[] agencyList;
+    private List<Agencies> agencyList;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            agencyList = await httpClient.GetFromJsonAsync<Agency1[]>("https://localhost:7046/api/Agency");
+            agencyList = await httpClient.GetFromJsonAsync<List<Agencies>>("https://localhost:7046/api/Agency/");
 
-            //Console.WriteLine(JsonSerializer.Serialize(agencyList));
+            
         }
         catch (Exception ex)
         {

@@ -102,7 +102,7 @@ else
         if (housing != null)
         {
             // Initialize the image URLs property with the current housing's image URLs
-            imageUrls = housing.Images != null ? string.Join(",", housing.Images) : "";
+            imageUrls = housing.images != null ? string.Join(",", housing.images) : "";
         }
     }
 
@@ -114,7 +114,7 @@ else
         housing = clickedHousing;
 
         // Update the image URLs property when a housing object is selected
-        imageUrls = housing.Images != null ? string.Join(",", housing.Images) : "";
+        imageUrls = housing.images != null ? string.Join(",", housing.images) : "";
     }
 
     private async Task HandleSubmit()
@@ -125,7 +125,7 @@ else
             var updatedImageUrls = imageUrls.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
             // Assign the list of URLs to the Images property
-            housing.Images = updatedImageUrls.ToList();
+            housing.images = updatedImageUrls.ToList();
 
             HttpResponseMessage response = await httpClient.PutAsJsonAsync($"https://localhost:7046/api/Housings/{housing.id}", housing);
             response.EnsureSuccessStatusCode(); // Ensure success status code

@@ -162,7 +162,7 @@
     {
         try
         {
-            housing.Images = imageUrls?.Split(',').ToList();
+            housing.images = imageUrls?.Split(',').ToList();
             HttpResponseMessage response = await httpClient.PostAsJsonAsync("https://localhost:7046/api/Housings", housing);
             response.EnsureSuccessStatusCode(); // Ensure success status code
 

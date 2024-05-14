@@ -52,10 +52,15 @@ else
 }
 
 @code {
-    private Agency1 agency;
+    private Agencies agency;
 
     [Parameter]
     public string AgencyId { get; set; }
+
+    private async Task NavigateToBrokerDetails(int brokerId)
+    {
+        // Navigate to the BrokerDetails page
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,12 +68,16 @@ else
         {
             try
             {
-                agency = await httpClient.GetFromJsonAsync<Agency1>($"https://localhost:7046/api/Agency/{id}");
+                agency = await httpClient.GetFromJsonAsync<Agencies>($"https://localhost:7046/api/Agency/{id}");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error fetching agency details: {ex.Message}");
             }
+        }
+        else
+        {
+            Console.WriteLine("Invalid agency ID");
         }
     }
 }

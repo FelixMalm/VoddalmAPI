@@ -32,13 +32,13 @@ else
 }
 
 @code {
-    private Broker[] brokerList;
+    private List <Broker> brokerList;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            brokerList = await httpClient.GetFromJsonAsync<Broker[]>("https://localhost:7046/api/Broker");
+            brokerList = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Brokeralway");
         }
         catch (Exception ex)
         {

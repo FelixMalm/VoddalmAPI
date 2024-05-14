@@ -46,10 +46,10 @@ else
                     <div class="housing-item">
                         <div class="housing-info">
                             <h5>Address: @housing.address</h5>
-                            @if (housing.Images != null && housing.Images.Any())
+                            @if (housing.images != null && housing.images.Any())
                             {
                                 <a href="@($"HousingDetails/{housing.id}")">
-                                    <img src="@housing.Images[0]" alt="Housing Image" />
+                                    <img src="@housing.images[0]" alt="Housing Image" />
                                 </a>
                             }
                             else

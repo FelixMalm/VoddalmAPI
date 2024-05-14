@@ -23,7 +23,7 @@ namespace VoddalmAPI.Data.Models
         public int YearBuilt { get; set; }
         public List<string> Images { get; set; } = new List<string>();
         public int CategoryId { get; set; }
-        public string BrokerId { get; set; }
+        public string? BrokerId { get; set; }
         public int MunicipalityId { get; set; }
         public Broker Broker { get; set; }
         public Municipality Municipality { get; set; }

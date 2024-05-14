@@ -72,9 +72,9 @@
                 <button class="next" @onclick="NextSlide">❯</button>
                 <div class="slider">
                     <div class="slides">
-                        @if (housing.Images != null && housing.Images.Any())
+                        @if (housing.images != null && housing.images.Any())
                         {
-                            <img src="@housing.Images[currentImageIndex]" alt="Housing Image" class="slide housing-image">
+                            <img src="@housing.images[currentImageIndex]" alt="Housing Image" class="slide housing-image">
                         }
                         else
                         {
@@ -117,11 +117,11 @@
 
     private void PrevSlide()
     {
-        currentImageIndex = (currentImageIndex - 1 + housing.Images.Count) % housing.Images.Count;
+        currentImageIndex = (currentImageIndex - 1 + housing.images.Count) % housing.images.Count;
     }
 
     private void NextSlide()
     {
-        currentImageIndex = (currentImageIndex + 1) % housing.Images.Count;
+        currentImageIndex = (currentImageIndex + 1) % housing.images.Count;
     }
 }
