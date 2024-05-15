@@ -86,6 +86,11 @@ namespace VoddalmAPI.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -137,6 +142,10 @@ namespace VoddalmAPI.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -245,44 +254,6 @@ namespace VoddalmAPI.Migrations
                     b.ToTable("Agency");
                 });
 
-            modelBuilder.Entity("VoddalmAPI.Data.Models.Broker", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AgencyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AgencyId");
-
-                    b.ToTable("Broker");
-                });
-
             modelBuilder.Entity("VoddalmAPI.Data.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -318,8 +289,8 @@ namespace VoddalmAPI.Migrations
                     b.Property<double>("AnnualOperatingCost")
                         .HasColumnType("float");
 
-                    b.Property<int>("BrokerId")
-                        .HasColumnType("int");
+                    b.Property<string>("BrokerId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -334,6 +305,9 @@ namespace VoddalmAPI.Migrations
 
                     b.Property<double>("InitialPrice")
                         .HasColumnType("float");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<double>("LivingArea")
                         .HasColumnType("float");
@@ -379,6 +353,30 @@ namespace VoddalmAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Municipality");
+                });
+
+            modelBuilder.Entity("VoddalmAPI.Data.Models.Broker", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<int>("AgencyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("AgencyId");
+
+                    b.HasDiscriminator().HasValue("Broker");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -432,24 +430,11 @@ namespace VoddalmAPI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("VoddalmAPI.Data.Models.Broker", b =>
-                {
-                    b.HasOne("VoddalmAPI.Data.Models.Agency", "Agency")
-                        .WithMany("Brokers")
-                        .HasForeignKey("AgencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Agency");
-                });
-
             modelBuilder.Entity("VoddalmAPI.Data.Models.Housing", b =>
                 {
                     b.HasOne("VoddalmAPI.Data.Models.Broker", "Broker")
                         .WithMany()
-                        .HasForeignKey("BrokerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BrokerId");
 
                     b.HasOne("VoddalmAPI.Data.Models.Category", "Category")
                         .WithMany()
@@ -468,6 +453,17 @@ namespace VoddalmAPI.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Municipality");
+                });
+
+            modelBuilder.Entity("VoddalmAPI.Data.Models.Broker", b =>
+                {
+                    b.HasOne("VoddalmAPI.Data.Models.Agency", "Agency")
+                        .WithMany("Brokers")
+                        .HasForeignKey("AgencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Agency");
                 });
 
             modelBuilder.Entity("VoddalmAPI.Data.Models.Agency", b =>

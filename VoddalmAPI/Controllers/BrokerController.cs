@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using VoddalmAPI.Data.Interfaces;
 using VoddalmAPI.Data.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace VoddalmAPI.Controllers
 {
@@ -26,7 +29,7 @@ namespace VoddalmAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Broker>> GetBroker(int id)
+        public async Task<ActionResult<Broker>> GetBroker(string id)
         {
             var broker = await brokerRepo.GetBrokerByIdAsync(id);
             if (broker == null)
@@ -53,6 +56,9 @@ namespace VoddalmAPI.Controllers
                     Email = brokerDto.Email,
                     PhoneNumber = brokerDto.PhoneNumber,
                     ImageUrl = brokerDto.ImageUrl,
+                    UserName = brokerDto.Email,
+                    
+
                 };
 
                 if (brokerDto.AgencyId.HasValue)
@@ -77,41 +83,55 @@ namespace VoddalmAPI.Controllers
         }
 
 
-        [HttpPut("{id}")] //Author Felix
-        public async Task<IActionResult> PutBroker(int id, [FromBody] BrokerDto brokerDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutBroker(string id, [FromBody] BrokerDto brokerDto)
         {
             try
             {
+                // Check if the model state is valid
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
 
+                // Attempt to find the broker by ID
                 var broker = await brokerRepo.GetBrokerByIdAsync(id);
                 if (broker == null)
                 {
+                    // Return 404 Not Found if broker is not found
                     return NotFound($"Broker with Id {id} not found");
                 }
 
+                // Update broker properties
                 broker.FirstName = brokerDto.FirstName;
                 broker.LastName = brokerDto.LastName;
                 broker.Email = brokerDto.Email;
                 broker.PhoneNumber = brokerDto.PhoneNumber;
                 broker.ImageUrl = brokerDto.ImageUrl;
+                broker.NormalizedEmail = brokerDto.Email.ToUpper(); // Normalize email
+                broker.NormalizedUserName = brokerDto.Email.ToUpper(); // Normalize username
+                broker.UserName = brokerDto.UserName;
 
+                // Update the broker entity in the repository
                 await brokerRepo.UpdateBrokerAsync(broker);
+
+                // Return 204 No Content if update is successful
                 return NoContent();
             }
             catch (Exception ex)
             {
                 // Log the exception
+                Console.WriteLine($"Error updating broker: {ex.Message}");
+
+                // Return 500 Internal Server Error for any other exceptions
                 return StatusCode(500, "Internal server error");
             }
         }
 
 
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBroker(int id)
+        public async Task<IActionResult> DeleteBroker(string id)
         {
             var existingBroker = await brokerRepo.GetBrokerByIdAsync(id);
             if (existingBroker == null)
@@ -123,6 +143,7 @@ namespace VoddalmAPI.Controllers
             return NoContent();
         }
     }
+
 
     public class BrokerDto //Author Felix
     {
@@ -137,7 +158,8 @@ namespace VoddalmAPI.Controllers
         [Phone]
         public string PhoneNumber { get; set; }
         public string ImageUrl { get; set; }
-        [Required]
+        public string UserName { get; set; }
+        
         public int? AgencyId { get; set; }
     }
 }

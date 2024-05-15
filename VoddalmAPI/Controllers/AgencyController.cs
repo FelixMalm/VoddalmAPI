@@ -6,19 +6,19 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace VoddalmAPI.Controllers 
+namespace VoddalmAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AgencyController : ControllerBase //Author Felix
+    public class AgencyController : ControllerBase // Author Felix
     {
         private readonly IAgency AgencyRepo;
         private readonly IBroker BrokerRepo;
 
-        public AgencyController(IAgency AgencyRepository, IBroker BrokerRepository) 
+        public AgencyController(IAgency AgencyRepository, IBroker BrokerRepository)
         {
             AgencyRepo = AgencyRepository;
-            BrokerRepo = BrokerRepository; 
+            BrokerRepo = BrokerRepository;
         }
 
         [HttpGet]
@@ -39,8 +39,8 @@ namespace VoddalmAPI.Controllers
             return Ok(agency);
         }
 
-        [HttpPost] //Author Felix
-        public async Task<ActionResult<Agency>> Post([FromBody] AgencyDto agencyDto) 
+        [HttpPost] // Author Felix
+        public async Task<ActionResult<Agency>> Post([FromBody] AgencyDto agencyDto)
         {
             try
             {
@@ -56,9 +56,9 @@ namespace VoddalmAPI.Controllers
                     LogoUrl = agencyDto.LogoUrl
                 };
 
-                if (agencyDto.BrokerId.HasValue)
+                if (!string.IsNullOrEmpty(agencyDto.BrokerId))
                 {
-                    var broker = await BrokerRepo.GetBrokerByIdAsync(agencyDto.BrokerId.Value);
+                    var broker = await BrokerRepo.GetBrokerByIdAsync(agencyDto.BrokerId);
                     if (broker == null)
                     {
                         return BadRequest("Invalid broker Id");
@@ -77,7 +77,7 @@ namespace VoddalmAPI.Controllers
             }
         }
 
-        [HttpPut("{id}")] //Author Felix
+        [HttpPut("{id}")] // Author Felix
         public async Task<IActionResult> Put(int id, [FromBody] AgencyDto agencyDto)
         {
             try
@@ -97,9 +97,9 @@ namespace VoddalmAPI.Controllers
                 agency.Presentation = agencyDto.Presentation;
                 agency.LogoUrl = agencyDto.LogoUrl;
 
-                if (agencyDto.BrokerId.HasValue)
+                if (!string.IsNullOrEmpty(agencyDto.BrokerId))
                 {
-                    var broker = await BrokerRepo.GetBrokerByIdAsync(agencyDto.BrokerId.Value);
+                    var broker = await BrokerRepo.GetBrokerByIdAsync(agencyDto.BrokerId);
                     if (broker == null)
                     {
                         return BadRequest("Invalid broker Id");
@@ -135,12 +135,12 @@ namespace VoddalmAPI.Controllers
         }
     }
 
-    public class AgencyDto //Author Felix
+    public class AgencyDto // Author Felix
     {
         [Required]
         public string Name { get; set; }
         public string Presentation { get; set; }
         public string LogoUrl { get; set; }
-        public int? BrokerId { get; set; } 
+        public string BrokerId { get; set; }
     }
 }

@@ -22,6 +22,8 @@ namespace VoddalmBlazor
             builder.Services.AddScoped<AuthenticationHandler>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
+
+
             builder.Services.AddHttpClient("ServerApi", client =>
             {
                 client.BaseAddress = new Uri(builder.Configuration["ServerUrl"] ?? "https://localhost:7046/");

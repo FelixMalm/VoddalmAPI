@@ -12,5 +12,6 @@ namespace BlazorWasmAuthentication.Services
         Task<bool> RefreshAsync();
         Task RegisterAsync(RegisterModel model);
         Task<string?> GetCurrentUserEmailAsync();
+        Task<string> GetAccessToken();
     }
 }

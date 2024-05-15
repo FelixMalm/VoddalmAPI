@@ -7,7 +7,8 @@ using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
 using System.IO;
-using System.Linq; // Add this namespace for LINQ operations
+using System.Linq;
+using Microsoft.AspNetCore.Components.Authorization; // Add this namespace for LINQ operations
 
 namespace BlazorWasmAuthentication.Services
 {
@@ -15,6 +16,7 @@ namespace BlazorWasmAuthentication.Services
     {
         private readonly System.Net.Http.IHttpClientFactory _factory;
         private readonly ISessionStorageService _sessionStorageService;
+        private readonly AuthenticationStateProvider _authenticationStateProvider;
 
         private const string JWT_KEY = nameof(JWT_KEY);
         private const string REFRESH_KEY = nameof(REFRESH_KEY);
@@ -23,10 +25,11 @@ namespace BlazorWasmAuthentication.Services
 
         public event Action<string?>? LoginChange;
 
-        public AuthenticationService(System.Net.Http.IHttpClientFactory factory, ISessionStorageService sessionStorageService)
+        public AuthenticationService(System.Net.Http.IHttpClientFactory factory, ISessionStorageService sessionStorageService, AuthenticationStateProvider authenticationStateProvider = null)
         {
             _factory = factory;
             _sessionStorageService = sessionStorageService;
+            _authenticationStateProvider = authenticationStateProvider;
         }
 
         public async ValueTask<string> GetJwtAsync()
@@ -133,6 +136,15 @@ namespace BlazorWasmAuthentication.Services
                 throw new Exception("Registration failed.");
 
             // Optionally, you can handle any additional logic here after successful registration
+        }
+        public async Task<string> GetAccessToken()
+        {
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            var accessToken = user.FindFirst("access_token")?.Value;
+
+            return accessToken;
         }
     }
 }

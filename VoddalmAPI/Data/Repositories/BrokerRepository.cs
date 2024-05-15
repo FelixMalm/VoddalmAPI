@@ -19,7 +19,7 @@ namespace VoddalmAPI.Data.Repositories
 			return await _context.Broker.Include(s => s.Agency).ToListAsync();
 		}
 
-        public async Task<Broker> GetBrokerByIdAsync(int id)
+        public async Task<Broker> GetBrokerByIdAsync(string id)
         {
             var broker = await _context.Broker.FindAsync(id);
 

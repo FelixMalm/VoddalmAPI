@@ -1,10 +1,8 @@
-﻿namespace VoddalmBlazor.Models
+﻿using System.Collections.Generic;
+
+namespace VoddalmBlazor.Models //Kim
 {
 
-    public class Rootobject
-    {
-        public Housing[] Housings { get; set; }
-    }
 
     public class Housing
     {
@@ -19,10 +17,11 @@
         public int monthlyFee { get; set; }
         public int annualOperatingCost { get; set; }
         public int yearBuilt { get; set; }
-        public List<string> Images { get; set; }
+        public List<string> images { get; set; }
         public int categoryId { get; set; }
-        public int brokerId { get; set; }
+        public string brokerId { get; set; }
         public int municipalityId { get; set; }
+        public bool IsActive { get; set; } = true;
         public Broker broker { get; set; }
         public Municipality municipality { get; set; }
         public Category category { get; set; }
@@ -30,42 +29,27 @@
 
     public class Broker
     {
-        public int id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
-        public string email { get; set; }
-        public string phoneNumber { get; set; }
         public string imageUrl { get; set; }
-        public Agency agency { get; set; }
-        
+        public Agencies agency { get; set; }
+        public string id { get; set; }
+        public string userName { get; set; }
+        public string normalizedUserName { get; set; }
+        public string email { get; set; }
+        public string normalizedEmail { get; set; }
+        public bool emailConfirmed { get; set; }
+        public string passwordHash { get; set; }
+        public string securityStamp { get; set; }
+        public string concurrencyStamp { get; set; }
+        public string phoneNumber { get; set; }
+        public bool phoneNumberConfirmed { get; set; }
+        public bool twoFactorEnabled { get; set; }
+        public bool lockoutEnabled { get; set; }
+        public int accessFailedCount { get; set; }
     }
 
-    public class Agency
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string presentation { get; set; }
-        public string logoUrl { get; set; }
-        public Broker1[] brokers { get; set; }
-    }
-    public class Agency1
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string presentation { get; set; }
-        public string logoUrl { get; set; }
-        public Broker[] brokers { get; set; }
-    }
-
-    public class Broker1
-    {
-        public int id { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string email { get; set; }
-        public string phoneNumber { get; set; }
-        public string imageUrl { get; set; }
-    }
+   
 
     public class Municipality
     {
@@ -78,11 +62,13 @@
         public int id { get; set; }
         public string name { get; set; }
     }
+
     public class LoginModel
     {
         public string Email { get; set; }
         public string Password { get; set; }
     }
+
     public class LoginResponse
     {
         public string Token { get; set; }
@@ -94,9 +80,10 @@
 
     public class RefreshModel
     {
-        public required string AccessToken { get; set; }
-        public required string RefreshToken { get; set; }
+        public string AccessToken { get; set; }
+        public string RefreshToken { get; set; }
     }
+
     public class RegisterModel
     {
         public string Name { get; set; }
