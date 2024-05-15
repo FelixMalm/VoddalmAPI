@@ -11,8 +11,6 @@
 <div class="filters">
     <input type="text" placeholder="Search" @bind="searchTerm" @oninput="FilterHousings" />
 
-
-
     <select @bind="selectedMunicipality">
         <option value="">All Municipalities</option>
         @foreach (var municipality in municipalities)

@@ -5,7 +5,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using VoddalmBlazor.Models
 @inject NavigationManager NavigationManager
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize]
 
 <h3>Add Housing</h3>
 
@@ -119,6 +119,12 @@
     <div class="form-group">
         <label for="images">Images URLs</label>
         <input type="text" class="form-control" @bind="imageUrl" id="images">
+        @if (string.IsNullOrWhiteSpace(imageUrl))
+        {
+            <div>
+                <img src="default-image-url.jpg" alt="Default Image">
+            </div>
+        }
     </div>
 
     @* @if (imageUrl != null)

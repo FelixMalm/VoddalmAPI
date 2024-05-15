@@ -1,7 +1,9 @@
 ﻿@page "/register"
 @using VoddalmBlazor.Models
 @using BlazorWasmAuthentication.Services
-@inject IAuthenticationService AuthenticationService
+@using VoddalmBlazor.Services.Base
+@inject IClient httpClient
+@* @inject IAuthenticationService AuthenticationService *@
 @inject NavigationManager NavigationManager
 
 <EditForm Model="@registerModel" OnValidSubmit="RegisterAsync">
@@ -38,14 +40,15 @@
 }
 
 @code {
-    private RegisterModel registerModel = new RegisterModel();
-    private string errorMessage;
+    UserDTO registerModel = new UserDTO();
+    string errorMessage;
 
     private async Task RegisterAsync()
     {
         try
         {
-            await AuthenticationService.RegisterAsync(registerModel);
+            await httpClient.RegisterAsync(registerModel);
+            //NavigateToLogin();
             NavigationManager.NavigateTo("/login");
         }
         catch (Exception ex)
