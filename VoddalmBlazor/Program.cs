@@ -26,7 +26,7 @@ namespace VoddalmBlazor
             builder.Services.AddBlazoredLocalStorage();
 
             builder.Services.AddScoped<AuthenticationHandler>();
-            builder.Services.AddScoped<AuthenticationStateProvider>(p => 
+            builder.Services.AddScoped<AuthenticationStateProvider>(p =>
                 p.GetRequiredService<AuthenticationHandler>());
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<IClient, Client>();
@@ -45,7 +45,7 @@ namespace VoddalmBlazor
     //        builder.Services.AddScoped<AuthenticationHandler>();
 
     //        // Replace ServerAuthenticationStateProvider with RemoteAuthenticationStateProvider
-    //        builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+    //        builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationHandler>();
     //        builder.Services.AddAuthorizationCore();
 
     //        builder.Services.AddHttpClient("ServerApi", client =>

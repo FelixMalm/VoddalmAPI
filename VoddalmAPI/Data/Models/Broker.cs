@@ -20,6 +20,5 @@ namespace VoddalmAPI.Data.Models
         [Required]
         //public int AgencyId { get; set; }
         public Agency Agency { get; set; }
-        
     }
 }

@@ -2,6 +2,10 @@
 using VoddalmBlazor.Services.Base;
 using Microsoft.AspNetCore.Components.Authorization;
 using BlazorWasmAuthentication.Handlers;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
+using VoddalmBlazor.Services.Extensions;
 
 namespace BlazorWasmAuthentication.Services
 {
@@ -20,7 +24,7 @@ namespace BlazorWasmAuthentication.Services
 
         public async Task<bool> AuthenticateAsync(LoginDTO Model)
         {
-            var response = await httpClient.LoginAsync(Model);
+            var response = await httpClient.CustomLoginAsync(Model);
 
             await localStorage.SetItemAsync("accesToken", response.Token);
 
