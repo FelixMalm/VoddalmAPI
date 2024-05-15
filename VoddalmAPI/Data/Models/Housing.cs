@@ -25,6 +25,7 @@ namespace VoddalmAPI.Data.Models
         public int CategoryId { get; set; }
         public string? BrokerId { get; set; }
         public int MunicipalityId { get; set; }
+        public bool IsActive { get; set; } = true;
         public Broker Broker { get; set; }
         public Municipality Municipality { get; set; }
         public Category Category { get; set; }

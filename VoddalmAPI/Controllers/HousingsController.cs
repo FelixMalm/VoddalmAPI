@@ -61,8 +61,9 @@ namespace VoddalmAPI.Controllers
                     AnnualOperatingCost = housingDto.AnnualOperatingCost,
                     YearBuilt = housingDto.YearBuilt,
                     CategoryId = housingDto.CategoryId,
-                    MunicipalityId = housingDto.MunicipalityId
-                };
+                    MunicipalityId = housingDto.MunicipalityId,
+                    IsActive = housingDto.IsActive
+            };
 
                 housing.Images = housingDto.Images;
 
@@ -118,6 +119,8 @@ namespace VoddalmAPI.Controllers
                 housing.CategoryId = housingDto.CategoryId;
                 housing.BrokerId = housingDto.BrokerId; // Assigning directly as BrokerId is already a string
                 housing.MunicipalityId = housingDto.MunicipalityId;
+                housing.Images = housingDto.Images;
+                housing.IsActive = housingDto.IsActive;
 
                 await housingRepo.UpdateHousingAsync(housing);
                 return NoContent();
@@ -163,6 +166,7 @@ namespace VoddalmAPI.Controllers
         public double MonthlyFee { get; set; }
         public double AnnualOperatingCost { get; set; }
         public int YearBuilt { get; set; }
+        public bool IsActive { get; set; }
         public int CategoryId { get; set; }
         public string? BrokerId { get; set; }
         public int MunicipalityId { get; set; }

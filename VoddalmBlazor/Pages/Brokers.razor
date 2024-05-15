@@ -38,7 +38,7 @@ else
     {
         try
         {
-            brokerList = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Brokeralway");
+            brokerList = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Broker");
         }
         catch (Exception ex)
         {

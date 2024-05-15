@@ -1,0 +1,63 @@
+﻿@page "/DeleteHousing/{HousingId:int}"
+@using System.Net.Http
+@using VoddalmBlazor.Models
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+
+<h3>Delete Housing</h3>
+
+@if (housing != null)
+{
+    <p>Are you sure you want to delete this housing?</p>
+    <p><strong>Address:</strong> @housing.address</p>
+    <p><strong>Initial Price:</strong> @housing.initialPrice</p>
+
+    <button class="btn btn-danger mr-2" @onclick="DeleteHousingAction">Delete</button>
+
+    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+}
+else
+{
+    <p>Housing not found.</p>
+}
+
+@code {
+    private Housing housing;
+
+    [Parameter]
+    public int HousingId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        housing = await httpClient.GetFromJsonAsync<Housing>($"https://localhost:7046/api/Housings/{HousingId}");
+    }
+
+    private async Task DeleteHousingAction() // Renamed the method to DeleteHousingAction
+    {
+        try
+        {
+
+            housing.IsActive = false;
+
+
+            HttpResponseMessage response = await httpClient.PutAsJsonAsync($"https://localhost:7046/api/Housings/{housing.id}", housing);
+            response.EnsureSuccessStatusCode();
+
+            // Redirect to a confirmation page or home page
+            NavigationManager.NavigateTo("/BrokerLoggedIn");
+        }
+        catch (Exception ex)
+        {
+            // Handle error, e.g., display error message
+            Console.WriteLine($"Error deleting housing: {ex.Message}");
+        }
+    }
+
+    private void Cancel()
+    {
+        // Redirect to the home page or previous page
+        NavigationManager.NavigateTo("/");
+    }
+}
+

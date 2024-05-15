@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VoddalmAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class chunga : Migration
+    public partial class chumba : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -226,8 +226,9 @@ namespace VoddalmAPI.Migrations
                     YearBuilt = table.Column<int>(type: "int", nullable: false),
                     Images = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    BrokerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    MunicipalityId = table.Column<int>(type: "int", nullable: false)
+                    BrokerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MunicipalityId = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -236,8 +237,7 @@ namespace VoddalmAPI.Migrations
                         name: "FK_Housing_AspNetUsers_BrokerId",
                         column: x => x.BrokerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Housing_Category_CategoryId",
                         column: x => x.CategoryId,

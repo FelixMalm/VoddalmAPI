@@ -1,13 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace VoddalmBlazor.Models
+namespace VoddalmBlazor.Models //Kim
 {
-    //public class Rootobject
-    //{
-    //    public List<Housing> Housings { get; set; }
-    //    public List<Broker> Broker { get; set; }
-    //    public List<Agency> Agency { get; set; }
-    //}
+
 
     public class Housing
     {
@@ -26,6 +21,7 @@ namespace VoddalmBlazor.Models
         public int categoryId { get; set; }
         public string brokerId { get; set; }
         public int municipalityId { get; set; }
+        public bool IsActive { get; set; } = true;
         public Broker broker { get; set; }
         public Municipality municipality { get; set; }
         public Category category { get; set; }

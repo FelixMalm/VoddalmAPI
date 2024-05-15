@@ -37,7 +37,10 @@
 else
 {
     <div class="housing-list">
-        @foreach (var housing in filteredHousings)
+        @{
+            var activeHousings = filteredHousings.Where(h => h.IsActive);
+        }
+        @foreach (var housing in activeHousings)
         {
             <div class="housing-item">
                 <a href="HousingDetails/@housing.id.ToString()">
@@ -58,6 +61,7 @@ else
                                 <li><strong>Initial Price:</strong> <span>@housing.initialPrice</span></li>
                                 <li><strong>Living Area:</strong> <span>@housing.livingArea</span></li>
                                 <li><strong>Agency:</strong> <a href="AgencyDetails/@housing.broker.agency.id.ToString()">@housing.broker.agency.name</a></li>
+
                                 <li><strong>Broker:</strong> <a href="BrokerDetails/@housing.broker.id">@housing.broker.firstName @housing.broker.lastName</a></li>
                             </ul>
                             @if (!string.IsNullOrEmpty(housing.broker.agency.logoUrl))
@@ -70,6 +74,7 @@ else
             </div>
         }
     </div>
+
 }
 
 @code {
@@ -91,10 +96,10 @@ else
             housingList = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
 
             // Fetch data for brokers
-            brokerList = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Brokers");
+            brokerList = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Broker");
 
             // Fetch data for agencies
-            agencyList = await httpClient.GetFromJsonAsync<List<Agency>>("https://localhost:7046/api/Agencies");
+            agencyList = await httpClient.GetFromJsonAsync<List<Agency>>("https://localhost:7046/api/Agency");
         }
         catch (Exception ex)
         {

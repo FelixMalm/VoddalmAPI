@@ -12,8 +12,8 @@ using VoddalmAPI.Data;
 namespace VoddalmAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240514122744_chunga")]
-    partial class chunga
+    [Migration("20240515143952_chumba")]
+    partial class chumba
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -293,7 +293,6 @@ namespace VoddalmAPI.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("BrokerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CategoryId")
@@ -309,6 +308,9 @@ namespace VoddalmAPI.Migrations
 
                     b.Property<double>("InitialPrice")
                         .HasColumnType("float");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<double>("LivingArea")
                         .HasColumnType("float");
@@ -435,9 +437,7 @@ namespace VoddalmAPI.Migrations
                 {
                     b.HasOne("VoddalmAPI.Data.Models.Broker", "Broker")
                         .WithMany()
-                        .HasForeignKey("BrokerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BrokerId");
 
                     b.HasOne("VoddalmAPI.Data.Models.Category", "Category")
                         .WithMany()
