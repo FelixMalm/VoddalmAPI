@@ -27,14 +27,14 @@ namespace VoddalmAPI.Data
                 {
                     Name = ApiRoles.User,
                     NormalizedName = ApiRoles.User,
-                    Id = ""
+                    Id = "waddub"
                     //Lägg till Id efter migration
                 },
                 new IdentityRole
                 {
                     Name = ApiRoles.Admin,
                     NormalizedName = ApiRoles.Admin,
-                    Id = ""
+                    Id = "chungus"
                     //Lägg till Id efter migration
                 }
                 );
