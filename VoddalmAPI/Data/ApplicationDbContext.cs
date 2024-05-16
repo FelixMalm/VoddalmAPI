@@ -5,7 +5,7 @@ using VoddalmAPI.Data.Models;
 
 namespace VoddalmAPI.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<Broker>
     {
 
         public DbSet<Housing> Housing { get; set; }
@@ -16,6 +16,28 @@ namespace VoddalmAPI.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Name = ApiRoles.User,
+                    NormalizedName = ApiRoles.User,
+                    Id = ""
+                    //Lägg till Id efter migration
+                },
+                new IdentityRole
+                {
+                    Name = ApiRoles.Admin,
+                    NormalizedName = ApiRoles.Admin,
+                    Id = ""
+                    //Lägg till Id efter migration
+                }
+                );
         }
     }
 }

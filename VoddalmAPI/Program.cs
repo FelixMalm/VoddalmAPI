@@ -28,7 +28,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContext") ?? throw new InvalidOperationException("Connection string not found.")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<Broker, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddRoles<IdentityRole>();
@@ -68,7 +68,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IHousing, HousingRepository>();
 builder.Services.AddScoped<IAgency, AgencyRepository>();
 builder.Services.AddScoped<IBroker, BrokerRepository>();
-builder.Services.AddScoped<IUserAccount, AccountRepository>();
+//builder.Services.AddScoped<IUserAccount, AccountRepository>();
 
 var app = builder.Build();
 
