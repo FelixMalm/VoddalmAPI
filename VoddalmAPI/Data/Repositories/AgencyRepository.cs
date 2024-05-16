@@ -12,14 +12,16 @@ namespace VoddalmAPI.Data.Repositories
         {
             _context = context;
         }
+
         public async Task<IEnumerable<Agency>> GetAgencyAsync()
         {
             return await _context.Agency.Include(s => s.Brokers).ToListAsync();
         }
+
         public async Task<Agency> GetAgencyByIdAsync(int id)
         {
             var agency = await _context.Agency
-                .Include(a => a.Brokers) 
+                .Include(a => a.Brokers)
                 .FirstOrDefaultAsync(a => a.Id == id);
 
             return agency;
@@ -30,6 +32,7 @@ namespace VoddalmAPI.Data.Repositories
             _context.Agency.Add(agency);
             await _context.SaveChangesAsync();
         }
+
         public async Task UpdateAgencyAsync(Agency agency)
         {
             _context.Entry(agency).State = EntityState.Modified;
@@ -42,9 +45,19 @@ namespace VoddalmAPI.Data.Repositories
             _context.Agency.Remove(agencyToDelete);
             await _context.SaveChangesAsync();
         }
+
         public async Task<Agency> GetAgencyByNameAsync(string name)
         {
             var agency = await _context.Agency.FirstOrDefaultAsync(a => a.Name == name);
+            return agency;
+        }
+
+        public async Task<Agency> GetAgencyWithIdAsync(int id)
+        {
+            var agency = await _context.Agency
+                .Include(a => a.Brokers)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
             return agency;
         }
     }

@@ -18,10 +18,15 @@ namespace VoddalmAPI.Data.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; } = string.Empty;
+        [Required]
+        public string PhoneNumber { get; set; }
+
 
         [Required]
         [DataType(DataType.Password)]
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; } = string.Empty;
+
+        public int? AgencyId { get; set; }
     }
 }

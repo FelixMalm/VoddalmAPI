@@ -8,10 +8,6 @@ namespace VoddalmAPI.Data
 {
     public static class SeedHelper //Author Kim Jonsson
     {
-        
-
-       
-
         public static async Task DataHelper(ApplicationDbContext context)
         {
             
