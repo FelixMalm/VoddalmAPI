@@ -3,21 +3,18 @@
 @using System.Text.Json
 @using VoddalmBlazor.Models
 @inject HttpClient httpClient
-@inject NavigationManager navigationManager 
+@inject NavigationManager navigationManager
 
-<!-- Author Kim Jonsson -->
 @if (broker == null)
 {
     <p>Loading...</p>
 }
 else
 {
-
     <div class="container">
         <h4>Broker Details</h4>
         <div class="broker-details">
             <div class="section">
-
                 <div class="broker-info">
                     @if (!string.IsNullOrEmpty(broker.imageUrl))
                     {
@@ -61,9 +58,12 @@ else
                 }
             </div>
         </div>
-
     </div>
 }
+
+<!-- Button to navigate to previous page -->
+<button class="btn btn-primary" @onclick="NavigateBack">Back</button>
+
 @code {
     private Broker broker;
     private List<Housing> associatedHousings;
@@ -75,7 +75,7 @@ else
     {
         if (!string.IsNullOrEmpty(BrokerId))
         {
-            string id = BrokerId; // Assign BrokerId directly to id
+            string id = BrokerId;
 
             try
             {
@@ -84,8 +84,6 @@ else
                 var housings = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
 
                 associatedHousings = housings.Where(h => h.brokerId.ToString() == id).ToList();
-
-
             }
             catch (Exception ex)
             {
@@ -93,5 +91,10 @@ else
             }
         }
     }
-}
 
+    // Method to navigate back to the previous page
+    private void NavigateBack()
+    {
+        navigationManager.NavigateTo("brokers");
+    }
+}

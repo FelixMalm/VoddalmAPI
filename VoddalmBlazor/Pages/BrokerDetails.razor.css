@@ -8,7 +8,6 @@
     gap: 20px;
 }
 
-
 .housing-item {
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -28,6 +27,14 @@
         margin: 0;
     }
 
+/* Set fixed aspect ratio for the images */
+.housing-item .card-img-top {
+    width: 100%; /* Ensure image takes full width */
+    height: 0; /* Set height to 0 */
+    padding-top: 60%; /* Set aspect ratio (adjust as needed) */
+    object-fit: cover; /* Ensure the image covers the entire space */
+}
+
 .broker-info {
     display: flex;
     align-items: center;
@@ -35,9 +42,9 @@
 
 .broker-text {
     flex: 1;
-    margin-left: 10rem; /* Adjusted margin */
+    margin-left: 10rem;
     margin-right: 10rem;
-    padding: 10px; /* Adjusted padding */
+    padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -51,7 +58,7 @@
     }
 
     .broker-text li {
-        margin-bottom: 5px; /* Reduced margin between list items */
+        margin-bottom: 5px;
     }
 
         .broker-text li strong {
@@ -61,6 +68,5 @@
 .broker-details {
     border: 1px solid #ccc;
     border-radius: 8px;
-    
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

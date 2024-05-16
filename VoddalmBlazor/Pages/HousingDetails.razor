@@ -5,11 +5,28 @@
 @inject HttpClient httpClient
 @inject IJSRuntime JSRuntime
 
-
 <div class="container">
     <div class="housing-details">
         @if (housing != null)
         {
+            <div class="section">
+                <h4>Images</h4>
+                <div class="slider">
+                    <button class="prev" @onclick="PrevSlide">❮</button>
+                    <div class="slides">
+                        @if (housing.images != null && housing.images.Any())
+                        {
+                            <img src="@housing.images[currentImageIndex]" alt="Housing Image" class="slide housing-image">
+                        }
+                        else
+                        {
+                            <p>No images available</p>
+                        }
+                    </div>
+                    <button class="next" @onclick="NextSlide">❯</button>
+                </div>
+            </div>
+
             <div class="section">
                 <h4>Property Details</h4>
                 <div class="housing-info">
@@ -65,26 +82,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="section">
-                <h4>Images</h4>
-                <button class="prev" @onclick="PrevSlide">❮</button>
-                <button class="next" @onclick="NextSlide">❯</button>
-                <div class="slider">
-                    <div class="slides">
-                        @if (housing.images != null && housing.images.Any())
-                        {
-                            <img src="@housing.images[currentImageIndex]" alt="Housing Image" class="slide housing-image">
-                        }
-                        else
-                        {
-                            <p>No images available</p>
-                        }
-                    </div>
-
-                </div>
-            </div>
-
         }
         else
         {

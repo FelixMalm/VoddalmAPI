@@ -62,7 +62,7 @@ namespace VoddalmAPI.Data
                     PhoneNumber = "234-567-8901",
                     FirstName = "Mike",
                     LastName = "Litoris",
-                    ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/f5/da/f5da602bc40d3fdaedaa2412398deba3.jpg",
+                    ImageUrl = "https://bilder.hemnet.se/images/broker_profile_large/48/89/4889d149130990d377b541db651e1e94.jpg",
                     Agency = agency1,
                     EmailConfirmed = true,
                     NormalizedUserName = "MIKE.LITORIS@EXAMPLE.COM",
