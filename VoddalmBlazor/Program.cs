@@ -31,7 +31,7 @@ namespace VoddalmBlazor
                 p.GetRequiredService<AuthenticationHandler>());
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<IClient, Client>();
-            //builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
         }
     }
 }
