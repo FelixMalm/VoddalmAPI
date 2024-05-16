@@ -1,0 +1,45 @@
+﻿@page "/login"
+@using VoddalmBlazor.Models
+@using BlazorWasmAuthentication.Services
+@using VoddalmBlazor.Services.Base
+@using BlazorWasmAuthentication.Handlers;
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+
+<!-- Author Felix Malm -->
+
+<EditForm Model="model" OnSubmit="HandleLogin">
+    <label for="Email">Email</label>
+    <InputText id="Email" @bind-Value="model.Email" />
+    <label for="password">Password</label>
+    <InputText id="password" @bind-Value="model.Password" type="password" />
+    <button type="submit" class="btn btn-primary">Do it!</button>
+</EditForm>
+
+@code {
+    LoginDTO model = new LoginDTO();
+
+    async Task HandleLogin()
+    {
+        string message = string.Empty;
+        try
+        {
+            var response = await AuthenticationService.AuthenticateAsync(model);
+
+            if (response)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+            message = "Try Again!";
+        }
+        catch (ApiException aex)
+        {
+            if (aex.StatusCode >= 200 && aex.StatusCode <= 299)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+            message = aex.Response;
+        }
+    }
+
+}

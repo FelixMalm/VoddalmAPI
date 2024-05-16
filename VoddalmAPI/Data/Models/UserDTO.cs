@@ -5,7 +5,10 @@ namespace VoddalmAPI.Data.Models
     {
         public string? Id { get; set; } = string.Empty;
         [Required]
-        public string Name { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required]
+        public string LastName { get; set; } = string.Empty;
 
         [Required]
         [EmailAddress]
@@ -20,6 +23,5 @@ namespace VoddalmAPI.Data.Models
         [DataType(DataType.Password)]
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; } = string.Empty;
-        
     }
 }
