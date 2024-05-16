@@ -12,9 +12,14 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div>
-        <label for="Name">Name:</label>
-        <InputText type="Name" @bind-Value="@registerModel.Name" id="Name" name="Name" required />
-        <ValidationMessage For="@(() => registerModel.Name)" />
+        <label for="FirstName">FirstName:</label>
+        <InputText type="FirstName" @bind-Value="@registerModel.FirstName" id="FirstName" name="FirstName" required />
+        <ValidationMessage For="@(() => registerModel.FirstName)" />
+    </div>
+    <div>
+        <label for="LastName">LastName:</label>
+        <InputText type="LastName" @bind-Value="@registerModel.LastName" id="LastName" name="LastName" required />
+        <ValidationMessage For="@(() => registerModel.LastName)" />
     </div>
     <div>
         <label for="Email">Email:</label>
