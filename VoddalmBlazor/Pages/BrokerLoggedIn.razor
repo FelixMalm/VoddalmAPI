@@ -8,31 +8,43 @@
 
 <h3>My Information</h3>
 
+
+
 @if (broker != null)
 {
     <div class="container">
-        <!-- Input fields for broker properties -->
-        <div class="form-group">
-            <label for="firstName">First Name</label>
-            <input type="text" class="form-control" id="firstName" @bind="broker.firstName" required>
-        </div>
-        <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" id="lastName" @bind="broker.lastName" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" @bind="broker.email" required>
-        </div>
-        <div class="form-group">
-            <label for="phoneNumber">Phone Number</label>
-            <input type="tel" class="form-control" id="phoneNumber" @bind="broker.phoneNumber" required>
-        </div>
-        <div class="form-group">
-            <label for="imageUrl">Image URL</label>
-            <input type="text" class="form-control" id="imageUrl" @bind="broker.imageUrl">
+        <div class="row">
+            <!-- Image of the logged-in broker -->
+            <div class="col-md-4 mb-3">
+                <img src="@broker.imageUrl" alt="Broker Image" class="img-fluid rounded-circle">
+            </div>
 
-            <button class="btn btn-primary" @onclick="UpdateBroker">Update Broker</button>
+            <!-- Input fields for broker properties -->
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" @bind="broker.firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" @bind="broker.lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" @bind="broker.email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" class="form-control" id="phoneNumber" @bind="broker.phoneNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="imageUrl">Image URL</label>
+                    <input type="text" class="form-control" id="imageUrl" @bind="broker.imageUrl">
+
+                    <button class="btn btn-primary" @onclick="UpdateBroker">Update Information</button>
+                    <a class="btn btn-primary mr-2" href="/AddHouse?BrokerId=@broker.id">Add new housing</a>
+                </div>
+            </div>
         </div>
     </div>
 }
@@ -41,19 +53,9 @@ else
     <p>Broker information not available.</p>
 }
 
-<h3>Add New Housing</h3>
-<div>
-    @if (broker != null)
-    {
-        <a class="btn btn-primary mr-2" href="/AddHouse?BrokerId=@broker.id">Add new housing</a>
-    }
-    else
-    {
-        <p>Broker information not available.</p>
-    }
-</div>
+<hr />
 
-<h3>My Housing Objects</h3>
+
 
 @if (associatedHousings != null && associatedHousings.Any())
 {
@@ -62,25 +64,24 @@ else
 
     @if (activeHousings.Any())
     {
-        <h3>Active Housings</h3>
-        <div class="container">
+        <h4>Active Housings</h4>
+        <div class="associated-housings housing-grid">
             <div class="row">
                 @foreach (var housingItem in activeHousings)
                 {
                     <div class="col-md-4 mb-3">
-                        <div class="card">
+                        <div class="card housing-item">
                             <img src="@housingItem.images.FirstOrDefault()" class="card-img-top" alt="Housing Image">
-                            <div class="card-body">
+                            <div class="card-body housing-info">
                                 <h5 class="card-title">
-                                    <!-- Housing address link -->
-                                    <a href="UpdateHousing/@housingItem.id">@housingItem.address</a>
+                                    <!-- Wrapped housing address in <a> tag -->
+                                    <a href="/HousingDetails/@housingItem.id">@housingItem.address</a>
                                 </h5>
-                                <div>
+                                <div class="button-group">
                                     <!-- Update button -->
                                     <a class="btn btn-primary mr-2" href="/updateHousing/@housingItem.id">Update</a>
-
                                     <!-- Delete button -->
-                                    <a class="btn btn-danger mr-2" href="/deleteHousing/@housingItem.id">Delete</a>
+                                    <a class="btn btn-danger" href="/deleteHousing/@housingItem.id">Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -89,23 +90,26 @@ else
             </div>
         </div>
     }
+    <hr />
 
-    <h3>Old Objects</h3>
+    <h4>Old Objects</h4>
 
     @if (inactiveHousings.Any())
     {
-        <h3>Inactive Housings</h3>
-        <div class="container">
+        
+        <div class="associated-housings housing-grid">
             <div class="row">
                 @foreach (var housingItem in inactiveHousings)
                 {
                     <div class="col-md-4 mb-3">
-                        <div class="card">
+                        <div class="card housing-item">
                             <img src="@housingItem.images.FirstOrDefault()" class="card-img-top" alt="Housing Image">
-                            <div class="card-body">
-                                <h5 class="card-title">@housingItem.address</h5>
+                            <div class="card-body housing-info">
+                                <h5 class="card-title">
+                                    <!-- Wrapped housing address in <a> tag -->
+                                    <a href="/HousingDetails/@housingItem.id">@housingItem.address</a>
+                                </h5>
                                 <p>This housing is currently inactive.</p>
-                                <!-- Button to activate housing -->
                                 <button class="btn btn-primary" @onclick="() => ActivateHousing(housingItem)">Restore</button>
                             </div>
                         </div>
@@ -118,12 +122,13 @@ else
     {
         <p>No inactive housings found.</p>
     }
-
 }
 else
 {
     <p>No housing objects found.</p>
 }
+
+
 
 @code {
     private Broker broker;

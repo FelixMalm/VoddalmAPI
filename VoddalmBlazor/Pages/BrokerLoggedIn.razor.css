@@ -1,0 +1,47 @@
+﻿.associated-housings {
+    margin-top: 5rem;
+}
+
+.housing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted width */
+    gap: 20px;
+}
+
+.housing-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    height: 500px;
+    width: 85%;
+}
+
+    .housing-item .card-img-top {
+        width: 100%;
+        height: auto; /* Adjusted height */
+        max-height: 50%; /* Maximum height for the image */
+        object-fit: cover;
+    }
+
+.housing-info h5 {
+    margin-bottom: 10px;
+}
+
+.housing-info p {
+    margin: 0;
+}
+
+.button-group {
+    margin-top: auto; /* Align buttons at the bottom */
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+    .button-group .btn {
+        width: 48%;
+    }
