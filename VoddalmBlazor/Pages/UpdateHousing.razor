@@ -67,9 +67,12 @@
         <div class="form-group">
             <label for="categoryId">Category</label>
             <select class="form-control" id="categoryId" @bind="housing.categoryId">
-                @foreach (var category in housingList.Select(h => h.category).Distinct())
+                @if(housingList != null)
                 {
-                    <option value="@category.id">@category.name</option>
+                    @foreach (var category in housingList.DistinctBy(b => b.categoryId))
+                    {
+                        <option value="@category.id">@category.category.name</option>
+                    }
                 }
             </select>
         </div>
@@ -77,9 +80,12 @@
         <div class="form-group">
             <label for="municipalityId">Municipality</label>
             <select class="form-control" id="municipalityId" @bind="housing.municipalityId">
-                @foreach (var municipality in housingList.Select(h => h.municipality).Distinct())
+                @if(housingList != null)
                 {
-                    <option value="@municipality.id">@municipality.name</option>
+                    @foreach (var municipality in housingList.DistinctBy(b => b.municipalityId))
+                    {
+                        <option value="@municipality.id">@municipality.municipality.name</option>
+                    }
                 }
             </select>
         </div>

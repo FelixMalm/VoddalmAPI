@@ -7,6 +7,7 @@ namespace BlazorWasmAuthentication.Services
     public interface IAuthenticationService
     {
         Task<bool> AuthenticateAsync(LoginDTO Model);
+        
 
         public Task Logout();
     }
