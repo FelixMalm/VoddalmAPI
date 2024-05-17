@@ -3,6 +3,7 @@
 @using System.Text.Json
 @using VoddalmBlazor.Models
 @inject HttpClient httpClient
+@inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 
 <div class="container">
@@ -90,6 +91,8 @@
     </div>
 </div>
 
+<button class="btn btn-primary" @onclick="NavigateBack">Back</button>
+
 @code {
     private Housing housing;
     private int currentImageIndex = 0;
@@ -120,5 +123,10 @@
     private void NextSlide()
     {
         currentImageIndex = (currentImageIndex + 1) % housing.images.Count;
+    }
+
+    private void NavigateBack()
+    {
+        navigationManager.NavigateTo("/");
     }
 }
