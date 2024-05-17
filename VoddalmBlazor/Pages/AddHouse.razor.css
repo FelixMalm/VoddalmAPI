@@ -1,59 +1,62 @@
-﻿/* AddHouse.razor.css */
-
-.form-container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
+﻿/* Style for form group */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Add some space between form groups */
 }
 
-.form-label {
+/* Style for labels */
+/* Style for labels */
+label {
+    display: inline-block; /* Display labels as blocks */
     font-weight: bold;
+    width: 150px; /* Set a fixed width for labels */
+    margin-right: 10px; /* Add some space between labels and inputs */
 }
 
+
+/* Style for input, textarea, and select */
 .form-control {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 100%; /* Make inputs, textareas, and selects full width */
+    padding: 8px; /* Add some padding */
+    border: 1px solid #ced4da; /* Add border */
+    border-radius: 4px; /* Round the corners */
 }
 
-.select-control {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Style for select arrow */
+select {
+    appearance: none; /* Remove default appearance */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23888"><path d="M7 10l5 5 5-5H7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Add custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    padding-right: 30px; /* Make space for arrow */
 }
 
-.btn-submit {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+/* Style for images */
+img {
+    max-width: 100%; /* Make images responsive */
+    height: auto;
+    margin-top: 10px; /* Add some space between images */
 }
 
-    .btn-submit:hover {
-        background-color: #0056b3;
+/* Style for submit button */
+.btn-primary {
+    background-color: #007bff; /* Blue color for submit button */
+    color: #fff; /* White text color */
+    padding: 10px 20px; /* Add some padding */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Round the corners */
+    cursor: pointer; /* Show pointer cursor on hover */
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3; /* Darker blue color on hover */
     }
 
-.alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    padding: .75rem 1.25rem;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: .25rem;
+/* Style for hidden input */
+input[type="hidden"] {
+    display: none; /* Hide hidden input */
+}
+.form-container {
+    max-width: 600px; /* Set a maximum width for the container */
+    margin: 0 auto; /* Center the container horizontally */
 }

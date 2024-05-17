@@ -12,8 +12,8 @@ using VoddalmAPI.Data;
 namespace VoddalmAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240516121225_chunga")]
-    partial class chunga
+    [Migration("20240517151053_BigChunga")]
+    partial class BigChunga
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace VoddalmAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "waddub",
+                            Id = "User",
                             Name = "User",
                             NormalizedName = "User"
                         },
                         new
                         {
-                            Id = "chungus",
+                            Id = "Admin",
                             Name = "admin",
                             NormalizedName = "admin"
                         });

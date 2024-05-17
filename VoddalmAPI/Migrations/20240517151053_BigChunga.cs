@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VoddalmAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class chunga : Migration
+    public partial class BigChunga : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -258,8 +258,8 @@ namespace VoddalmAPI.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "chungus", null, "admin", "admin" },
-                    { "waddub", null, "User", "User" }
+                    { "Admin", null, "admin", "admin" },
+                    { "User", null, "User", "User" }
                 });
 
             migrationBuilder.CreateIndex(

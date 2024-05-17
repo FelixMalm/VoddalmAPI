@@ -1,6 +1,8 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿
+<div class="top-row ps-3 navbar navbar-dark">
+
     <div class="container-fluid">
-        <a class="navbar-brand" href="">VoddalmBlazor</a>
+        <a class="navbar-brand" href="">The Mäklers</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -16,7 +18,7 @@
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="Brokers" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Brokers
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Brokers
             </NavLink>
         </div>
         <div class="nav-item px-3">
@@ -24,15 +26,7 @@
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Agency
             </NavLink>
         </div>
-        <AuthorizeView>
-            <Authorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="AddHouse" Match="NavLinkMatch.All">
-                        <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Add House
-                    </NavLink>
-                </div>
-            </Authorized>
-        </AuthorizeView>
+       
     </nav>
 </div>
 
