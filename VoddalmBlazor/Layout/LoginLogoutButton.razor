@@ -1,9 +1,11 @@
-﻿@using Blazored.LocalStorage
+﻿@using BlazorWasmAuthentication.Services
+@using Blazored.LocalStorage
 @inject ILocalStorageService LocalStorage
+@inject IAuthenticationService AuthenticationService
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthStateProvider
-@inject BlazorWasmAuthentication.Services.AuthenticationService AuthService
 
+@* @inject BlazorWasmAuthentication.Services.AuthenticationService AuthService *@
 
 <AuthorizeView>
     <Authorized>
@@ -22,7 +24,7 @@
 
     async Task Logout()
     {
-        await AuthService.Logout();
-        NavigationManager.NavigateTo("/");
+        await AuthenticationService.Logout();
+        NavigationManager.NavigateTo("Home");
     }
 }
