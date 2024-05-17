@@ -102,7 +102,7 @@ namespace VoddalmAPI.Controllers
                     UserId = user.Id,
                 };
 
-                return Accepted(response);
+                return Ok(response);
             }
             catch (Exception ex)
             {

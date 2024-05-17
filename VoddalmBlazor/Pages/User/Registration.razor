@@ -2,42 +2,67 @@
 @using VoddalmBlazor.Models
 @using BlazorWasmAuthentication.Services
 @using VoddalmBlazor.Services.Base
-@inject IClient httpClient
-@* @inject IAuthenticationService AuthenticationService *@
+@inject HttpClient httpClient
 @inject NavigationManager NavigationManager
 
-<!-- Author Felix Malm -->
+@* Define the property to store the list of agencies *@
+
 
 <EditForm Model="@registerModel" OnValidSubmit="RegisterAsync">
     <DataAnnotationsValidator />
     <ValidationSummary />
+
     <div>
-        <label for="FirstName">FirstName:</label>
-        <InputText type="FirstName" @bind-Value="@registerModel.FirstName" id="FirstName" name="FirstName" required />
+        <label for="FirstName">First Name:</label>
+        <InputText @bind-Value="@registerModel.FirstName" id="FirstName" name="FirstName" required />
         <ValidationMessage For="@(() => registerModel.FirstName)" />
     </div>
+
     <div>
-        <label for="LastName">LastName:</label>
-        <InputText type="LastName" @bind-Value="@registerModel.LastName" id="LastName" name="LastName" required />
+        <label for="LastName">Last Name:</label>
+        <InputText @bind-Value="@registerModel.LastName" id="LastName" name="LastName" required />
         <ValidationMessage For="@(() => registerModel.LastName)" />
     </div>
+
     <div>
         <label for="Email">Email:</label>
         <InputText @bind-Value="@registerModel.Email" id="Email" name="Email" required />
         <ValidationMessage For="@(() => registerModel.Email)" />
     </div>
+
     <div>
-        <label for="password">Password:</label>
-        <InputText type="password" @bind-Value="@registerModel.Password" id="password" name="password" required />
+        <label for="PhoneNumber">Phone Number:</label>
+        <InputText @bind-Value="@registerModel.PhoneNumber" id="PhoneNumber" name="PhoneNumber" required />
+        <ValidationMessage For="@(() => registerModel.PhoneNumber)" />
+    </div>
+
+    <div>
+        <label for="Password">Password:</label>
+        <InputText @bind-Value="@registerModel.Password" id="Password" name="Password" type="password" required />
         <ValidationMessage For="@(() => registerModel.Password)" />
     </div>
+
     <div>
-        <label for="ConfirmPassword">ConfirmPassword:</label>
-        <InputText type="password" @bind-Value="@registerModel.ConfirmPassword" id="ConfirmPassword" name="ConfirmPassword" required />
+        <label for="ConfirmPassword">Confirm Password:</label>
+        <InputText @bind-Value="@registerModel.ConfirmPassword" id="ConfirmPassword" name="ConfirmPassword" type="password" required />
         <ValidationMessage For="@(() => registerModel.ConfirmPassword)" />
     </div>
+
     <div>
-        <button type="submit">Register</button>
+        <label for="AgencyId">Agency:</label>
+        <select @bind="registerModel.AgencyId" id="AgencyId" name="AgencyId">
+
+            <option value="">Select an agency</option>
+            @foreach (var agency in agencyList)
+            {
+                <option value="@agency.Id">@agency.Name</option>
+            }
+        </select>
+        <ValidationMessage For="@(() => registerModel.AgencyId)" />
+    </div>
+
+    <div>
+        <button type="submit">Submit</button>
     </div>
 </EditForm>
 
@@ -45,17 +70,31 @@
 {
     <p class="error">@errorMessage</p>
 }
-
 @code {
+    List<Agency> agencyList = new List<Agency>();
     UserDTO registerModel = new UserDTO();
     string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch the list of agencies from the API
+        agencyList = await httpClient.GetFromJsonAsync<List<Agency>>("https://localhost:7046/api/Agency/");
+    }
 
     private async Task RegisterAsync()
     {
         try
         {
-            await httpClient.RegisterAsync(registerModel);
-            //NavigateToLogin();
+            // Call the registration endpoint
+            var response = await httpClient.PostAsJsonAsync("https://localhost:7046/api/Account/register", registerModel);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                errorMessage = "Registration failed. Please try again.";
+                return;
+            }
+
+            // Registration successful, navigate to login page
             NavigationManager.NavigateTo("/login");
         }
         catch (Exception ex)

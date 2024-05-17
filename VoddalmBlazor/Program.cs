@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
 using VoddalmBlazor.Services.Base;
+using System.IdentityModel.Tokens.Jwt; // Add this namespace
 
 //Author Felix Malm
 
@@ -26,12 +27,14 @@ namespace VoddalmBlazor
 
             builder.Services.AddBlazoredLocalStorage();
 
+            builder.Services.AddScoped<JwtSecurityTokenHandler>(); 
             builder.Services.AddScoped<AuthenticationHandler>();
             builder.Services.AddScoped<AuthenticationStateProvider>(p =>
                 p.GetRequiredService<AuthenticationHandler>());
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<IClient, Client>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            await builder.Build().RunAsync();
         }
     }
 }
