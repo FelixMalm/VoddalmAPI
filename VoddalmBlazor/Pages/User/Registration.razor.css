@@ -9,7 +9,25 @@
 
 .form-group {
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
 }
+
+    .form-group label {
+        flex: 0 0 30%; /* Adjust label width as needed */
+    }
+
+    .form-group input,
+    .form-group select {
+        flex: 1; /* Let input/select take remaining space */
+         /* Add spacing between label and input/select */
+        
+    }
+    .form-group select {
+        
+        
+        width: calc(70% - 10px - px); /* Adjust width to match label width and spacing */
+    }
 
 .error {
     color: red;

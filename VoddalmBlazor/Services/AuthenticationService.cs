@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using VoddalmBlazor.Services.Extensions;
+using System.Security.Claims;
 
 namespace BlazorWasmAuthentication.Services
 {
@@ -26,9 +27,13 @@ namespace BlazorWasmAuthentication.Services
         {
             var response = await httpClient.LoginAsync(loginModel);
             await localStorage.SetItemAsync("accessToken", response.Token);
+            await localStorage.SetItemAsync("userId", response.UserId);
+            await localStorage.SetItemAsync("email", response.Email);
             await ((AuthenticationHandler)authenticationStateProvider).LoggedIn();
             return true;
         }
+        
+
 
 
 
@@ -38,4 +43,5 @@ namespace BlazorWasmAuthentication.Services
             await ((AuthenticationHandler)authenticationStateProvider).LoggedOut();
         }
     }
+
 }

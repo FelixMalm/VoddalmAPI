@@ -4,13 +4,14 @@
 @using VoddalmBlazor.Services.Base
 @using BlazorWasmAuthentication.Handlers;
 @using Blazored.LocalStorage;
+
 @inject IAuthenticationService AuthenticationService
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
 
 <!-- Author Felix Malm + kim -->
 
-<div>
+<div class="login-container">
     <EditForm Model="model" OnValidSubmit="HandleLogin">
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -29,18 +30,13 @@
 
     @if (!string.IsNullOrEmpty(errorMessage))
     {
-        <div class="alert alert-danger mt-3">@errorMessage</div>
+        <div class="error mt-3">@errorMessage</div>
     }
 
-    @if (tokenExpirationTime.HasValue)
-    {
-        <div>
-            Token is valid until: @tokenExpirationTime.Value.ToString("f")
-            <br />
-            Time remaining: @GetTimeRemaining(tokenExpirationTime.Value)
-        </div>
-    }
+   
 </div>
+
+
 
 @code {
     LoginDTO model = new LoginDTO();
@@ -59,6 +55,8 @@
             if (response)
             {
                 var jwtToken = await LocalStorage.GetItemAsStringAsync("accessToken");
+
+
                 // tokenExpirationTime = GetTokenExpiration(jwtToken);
 
                 // Start timer to update UI with remaining time
