@@ -8,13 +8,14 @@
 @inject NavigationManager NavigationManager
 <!-- Author Kim Jonsson -->
 
-<h3>Add Housing</h3>
+
 
 @if (errorMessage != null)
 {
     <div class="alert alert-danger">@errorMessage</div>
 }
-
+<div class="form-container">
+    <h3>Add Housing</h3>
 <form @onsubmit="HandleSubmit">
     <div class="form-group">
         <label for="address">Address</label>
@@ -103,6 +104,9 @@
         <label for="images">Images URLs</label>
         <input type="text" class="form-control" @bind="imageUrls" id="images">
     </div>
+    <button class="btn btn-primary" @onclick="NavigateBack">Back</button>
+&nbsp;
+<button type="submit" class="btn btn-primary">Submit</button>
 
     @if (!string.IsNullOrWhiteSpace(imageUrls))
     {
@@ -120,9 +124,9 @@
         </div>
     }
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    
 </form>
-
+</div>
 <input type="hidden" id="brokerId" @bind="housing.brokerId" />
 
 @code {
@@ -172,4 +176,10 @@
             errorMessage = ex.Message;
         }
     }
+    private void NavigateBack()
+{
+    NavigationManager.NavigateTo("javascript:history.back()");
+}
+
+
 }

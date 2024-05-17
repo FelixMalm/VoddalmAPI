@@ -1,0 +1,31 @@
+﻿/* Style for paragraph */
+p {
+    margin-bottom: 10px; /* Add some space between paragraphs */
+}
+
+    /* Style for strong tags inside paragraphs */
+    p strong {
+        font-weight: bold;
+    }
+
+/* Style for buttons */
+.btn {
+    padding: 8px 16px; /* Add some padding */
+    border-radius: 4px; /* Round the corners */
+    cursor: pointer; /* Show pointer cursor on hover */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Red color for delete button */
+    color: #fff; /* White text color */
+}
+
+.btn-secondary {
+    background-color: #6c757d; /* Grey color for cancel button */
+    color: #fff; /* White text color */
+}
+
+/* Add margin to the second button to separate them */
+.btn-secondary {
+    margin-left: 5px;
+}

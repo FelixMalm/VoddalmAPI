@@ -51,13 +51,13 @@ namespace VoddalmAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "waddub",
+                            Id = "User",
                             Name = "User",
                             NormalizedName = "User"
                         },
                         new
                         {
-                            Id = "chungus",
+                            Id = "Admin",
                             Name = "admin",
                             NormalizedName = "admin"
                         });

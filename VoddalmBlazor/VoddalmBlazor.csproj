@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\DeleteHousing.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\DeleteHousing.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Layout\MainLayout.razor" />
     <None Include="Layout\NavMenu.razor" />
     <None Include="Pages\Home.razor" />
