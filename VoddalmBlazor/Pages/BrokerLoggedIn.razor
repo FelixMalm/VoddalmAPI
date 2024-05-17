@@ -1,14 +1,16 @@
 ﻿@page "/brokerLoggedIn"
 @using System.Net.Http
+@using System.Net.Http.Headers;
 @using System.Text.Json
 @using VoddalmBlazor.Models
+@using Blazored.LocalStorage;
+@using System.Security.Claims;
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
+@inject ILocalStorageService localStorage
 <!-- Author Kim Jonsson -->
 
 <h3>My Information</h3>
-
-
 
 @if (broker != null)
 {
@@ -54,8 +56,6 @@ else
 }
 
 <hr />
-
-
 
 @if (associatedHousings != null && associatedHousings.Any())
 {
@@ -157,14 +157,28 @@ else
     {
         try
         {
-            var brokerList = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Broker");
-            if (brokerList != null && brokerList.Count >= 4)
+            // Retrieve token, email, and user id from local storage
+            var token = await localStorage.GetItemAsStringAsync("Token");
+            var email = await localStorage.GetItemAsStringAsync("Email");
+            var userId = await localStorage.GetItemAsStringAsync("UserId");
+
+            // Use the token, email, and user id to identify the logged-in broker
+            if (!string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(userId))
             {
-                broker = brokerList[3];
-                if (broker != null)
+                // Make sure to pass the token in the request header
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var brokerList = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Broker");
+                if (brokerList != null)
                 {
-                    var housings = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
-                    associatedHousings = housings?.Where(h => h.brokerId == broker.id).ToList();
+                    // Find the logged-in broker using the email or user id
+                    broker = brokerList.FirstOrDefault(b => b.email == email || b.id == userId);
+
+                    if (broker != null)
+                    {
+                        var housings = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
+                        associatedHousings = housings?.Where(h => h.brokerId == broker.id).ToList();
+                    }
                 }
             }
         }

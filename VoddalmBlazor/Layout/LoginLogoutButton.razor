@@ -10,9 +10,13 @@
 <AuthorizeView>
     <Authorized>
         <button @onclick="Logout" class="btn btn-danger">Logout</button>
+        &nbsp;
+        <button @onclick="brokerLogged" class="btn btn-primary">User Account</button>
     </Authorized>
     <NotAuthorized>
         <button @onclick="Login" class="btn btn-primary">Login</button>
+        &nbsp;
+        <button @onclick="Register" class="btn btn-primary">Register</button>
     </NotAuthorized>
 </AuthorizeView>
 
@@ -20,6 +24,16 @@
     void Login()
     {
         NavigationManager.NavigateTo("login");
+    }
+
+    void Register()
+    {
+        NavigationManager.NavigateTo("register");
+    }
+
+    void brokerLogged()
+    {
+        NavigationManager.NavigateTo("/brokerLoggedIn");
     }
 
     async Task Logout()

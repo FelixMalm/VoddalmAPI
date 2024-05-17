@@ -59,6 +59,7 @@
             if (response)
             {
                 var jwtToken = await LocalStorage.GetItemAsStringAsync("accessToken");
+
                 // tokenExpirationTime = GetTokenExpiration(jwtToken);
 
                 // Start timer to update UI with remaining time
