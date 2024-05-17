@@ -15,24 +15,23 @@ namespace BlazorWasmAuthentication.Services
         private readonly ILocalStorageService localStorage;
         private readonly AuthenticationStateProvider authenticationStateProvider;
 
-        public AuthenticationService(IClient httpClient, ILocalStorageService localStorage, AuthenticationStateProvider authentciationStateProvider)
+        public AuthenticationService(IClient httpClient, ILocalStorageService localStorage, AuthenticationStateProvider authenticationStateProvider)
         {
             this.httpClient = httpClient;
             this.localStorage = localStorage;
-            this.authenticationStateProvider = authentciationStateProvider;
+            this.authenticationStateProvider = authenticationStateProvider;
         }
 
-        public async Task<bool> AuthenticateAsync(LoginDTO Model)
+        public async Task<bool> AuthenticateAsync(LoginDTO loginModel)
         {
-            //var response = await httpClient.CustomLoginAsync(Model);
-            var response = await httpClient.LoginAsync(Model);
-
-            await localStorage.SetItemAsync("accesToken", response.Token);
-
+            var response = await httpClient.LoginAsync(loginModel);
+            await localStorage.SetItemAsync("accessToken", response.Token);
             await ((AuthenticationHandler)authenticationStateProvider).LoggedIn();
-
             return true;
         }
+
+
+
 
         public async Task Logout()
         {

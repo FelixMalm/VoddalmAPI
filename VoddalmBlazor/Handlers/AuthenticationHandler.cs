@@ -1,12 +1,11 @@
-﻿
-using Blazored.LocalStorage;
-using BlazorWasmAuthentication.Services;
-
+﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Net.Http.Headers;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 //Author Felix Malm
 
@@ -20,8 +19,9 @@ namespace BlazorWasmAuthentication.Handlers
         public AuthenticationHandler(ILocalStorageService localStorage, JwtSecurityTokenHandler jwtHandler)
         {
             this.localStorage = localStorage;
-            jwtHandler = new JwtSecurityTokenHandler();
+            this.jwtHandler = jwtHandler;
         }
+
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity());
@@ -33,25 +33,36 @@ namespace BlazorWasmAuthentication.Handlers
                 return new AuthenticationState(user);
             }
 
-            var tokenContent = jwtHandler.ReadJwtToken(savedToken);
-
-            if (tokenContent.ValidTo < DateTime.Now)
+            try
             {
+                var tokenContent = jwtHandler.ReadJwtToken(savedToken);
+
+                if (tokenContent.ValidTo < DateTime.Now)
+                {
+                    return new AuthenticationState(user);
+                }
+
+                var claims = await GetClaims();
+                user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
+
                 return new AuthenticationState(user);
             }
-
-            var claims = await GetClaims();
-            user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
-
-            return new AuthenticationState(user);
+            catch (Exception ex)
+            {
+                // Handle token reading error
+                Console.WriteLine($"Error reading JWT token: {ex.Message}");
+                return new AuthenticationState(user);
+            }
         }
+
         public async Task LoggedIn()
         {
             var claims = await GetClaims();
-            var user = new ClaimsPrincipal(new ClaimsIdentity());
+            var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
             var authState = Task.FromResult(new AuthenticationState(user));
             NotifyAuthenticationStateChanged(authState);
         }
+
         public async Task LoggedOut()
         {
             await localStorage.RemoveItemAsync("accessToken");
@@ -59,6 +70,7 @@ namespace BlazorWasmAuthentication.Handlers
             var authState = Task.FromResult(new AuthenticationState(nobody));
             NotifyAuthenticationStateChanged(authState);
         }
+
         private async Task<List<Claim>> GetClaims()
         {
             var savedToken = await localStorage.GetItemAsync<string>("accessToken");

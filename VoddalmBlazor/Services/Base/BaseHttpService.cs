@@ -31,7 +31,7 @@ namespace VoddalmBlazor.Services.Base
 
         protected async Task GetBearerToken()
         {
-            var token = await localStorage.GetItemAsync<string>("accesstoken");
+            var token = await localStorage.GetItemAsync<string>("accessToken");
             if (token != null)
             {
                 client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);

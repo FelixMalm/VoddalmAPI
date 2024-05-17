@@ -3,43 +3,98 @@
 @using BlazorWasmAuthentication.Services
 @using VoddalmBlazor.Services.Base
 @using BlazorWasmAuthentication.Handlers;
+@using Blazored.LocalStorage;
 @inject IAuthenticationService AuthenticationService
+@inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
 
-<!-- Author Felix Malm -->
+<!-- Author Felix Malm + kim -->
 
-<EditForm Model="model" OnSubmit="HandleLogin">
-    <label for="Email">Email</label>
-    <InputText id="Email" @bind-Value="model.Email" />
-    <label for="password">Password</label>
-    <InputText id="password" @bind-Value="model.Password" type="password" />
-    <button type="submit" class="btn btn-primary">Do it!</button>
-</EditForm>
+<div>
+    <EditForm Model="model" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <InputText class="form-control" @bind-Value="model.Email" />
+            <ValidationMessage For="@(() => model.Email)" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <InputText class="form-control" type="password" @bind-Value="model.Password" />
+            <ValidationMessage For="@(() => model.Password)" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-3">Login</button>
+    </EditForm>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger mt-3">@errorMessage</div>
+    }
+
+    @if (tokenExpirationTime.HasValue)
+    {
+        <div>
+            Token is valid until: @tokenExpirationTime.Value.ToString("f")
+            <br />
+            Time remaining: @GetTimeRemaining(tokenExpirationTime.Value)
+        </div>
+    }
+</div>
 
 @code {
     LoginDTO model = new LoginDTO();
+    DateTime? tokenExpirationTime = null;
+    Timer _timer;
+    string errorMessage = "";
 
     async Task HandleLogin()
     {
-        string message = string.Empty;
+        errorMessage = ""; // Clear any previous error messages
+
         try
         {
             var response = await AuthenticationService.AuthenticateAsync(model);
 
             if (response)
             {
+                var jwtToken = await LocalStorage.GetItemAsStringAsync("accessToken");
+                // tokenExpirationTime = GetTokenExpiration(jwtToken);
+
+                // Start timer to update UI with remaining time
+                _timer = new Timer(state => InvokeAsync(StateHasChanged), null, 1000, 1000);
                 NavigationManager.NavigateTo("/");
             }
-            message = "Try Again!";
+            else
+            {
+                errorMessage = "Invalid email or password. Please try again.";
+            }
         }
         catch (ApiException aex)
         {
-            if (aex.StatusCode >= 200 && aex.StatusCode <= 299)
-            {
-                NavigationManager.NavigateTo("/");
-            }
-            message = aex.Response;
+            errorMessage = "An error occurred during authentication. Please try again later.";
+            // Log or handle the exception as needed
         }
     }
 
+    // DateTime? GetTokenExpiration(string token)
+    // {
+    //     var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+    //     var jwtToken = handler.ReadJwtToken(token);
+    //     var exp = jwtToken.Claims.FirstOrDefault(c => c.Type == "exp")?.Value;
+
+    //     if (long.TryParse(exp, out var expSeconds))
+    //     {
+    //         var expirationTime = DateTimeOffset.FromUnixTimeSeconds(expSeconds).UtcDateTime;
+    //         return expirationTime;
+    //     }
+
+    //     return null;
+    // }
+
+    string GetTimeRemaining(DateTime expirationTime)
+    {
+        var timeSpan = expirationTime - DateTime.Now;
+        return $"{timeSpan.Hours} hours, {timeSpan.Minutes} minutes, {timeSpan.Seconds} seconds";
+    }
 }
