@@ -1,34 +1,36 @@
-﻿
-<div class="top-row ps-3 navbar navbar-dark">
+﻿<header class="custom-header">
+    <script src="https://kit.fontawesome.com/4d7bdf96d6.js" crossorigin="anonymous"></script>
+    <div class="top-row ps-3 navbar navbar-dark">
 
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">The Mäklers</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="container-custom">
+            <a class="navbar-brand custom-brand" href="">The Mäklers</a>
+            <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
     </div>
-</div>
 
-<div class="@NavMenuCssClass nav-scrollable">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Housings
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Brokers" Match="NavLinkMatch.All">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Brokers
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Agency" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Agency
-            </NavLink>
-        </div>
-       
-    </nav>
-</div>
+    <div class="custom-sidebar @NavMenuCssClass nav-scrollable">
+        <nav class="flex-column">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="fa-solid fa-house" aria-hidden="true"></span> Housings
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Brokers" Match="NavLinkMatch.All">
+                    <span class="fa-solid fa-users" aria-hidden="true"></span> Brokers
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Agency" Match="NavLinkMatch.All">
+                    <span class="fa-solid fa-address-card" aria-hidden="true"></span> Agency
+                </NavLink>
+            </div>
+
+        </nav>
+    </div>
+</header>
 
 @code {
     private bool collapseNavMenu = true;
@@ -39,5 +41,4 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
-
 }

@@ -55,6 +55,13 @@
                 </div>
             </div>
         </div>
+        <!-- Success message -->
+        @if (successMessage != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @successMessage
+            </div>
+        }
     </div>
 }
 else
@@ -99,11 +106,11 @@ else
     }
     <hr />
 
-    <h4>Old Objects</h4>
+    
 
     @if (inactiveHousings.Any())
     {
-        
+        <h4>Deleted Objects</h4>
         <div class="associated-housings housing-grid">
             <div class="row">
                 @foreach (var housingItem in inactiveHousings)
@@ -120,6 +127,7 @@ else
                                 <button class="btn btn-primary" @onclick="() => ActivateHousing(housingItem)">Restore</button>
                             </div>
                         </div>
+                        
                     </div>
                 }
             </div>
@@ -142,6 +150,7 @@ else
     private List<Housing> housing;
     private List<Housing> associatedHousings; // Change type to List<Housing>
     private string currentUserId;
+    private string successMessage;
 
     protected override async Task OnInitializedAsync()
     {
@@ -174,11 +183,6 @@ else
 
 
 
-
-    
-
-   
-
     private async Task UpdateBroker()
     {
         try
@@ -196,7 +200,7 @@ else
                 HttpResponseMessage response = await httpClient.PutAsJsonAsync(apiUrl, broker);
                 response.EnsureSuccessStatusCode();
 
-                // Navigate to the specified URL after successful update
+                successMessage = "Broker information updated successfully!";
             }
             else
             {

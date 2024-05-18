@@ -7,125 +7,122 @@
 @using VoddalmBlazor.Models
 @inject NavigationManager NavigationManager
 <!-- Author Kim Jonsson -->
-
-
-
 @if (errorMessage != null)
 {
     <div class="alert alert-danger">@errorMessage</div>
 }
 <div class="form-container">
     <h3>Add Housing</h3>
-<form @onsubmit="HandleSubmit">
-    <div class="form-group">
-        <label for="address">Address</label>
-        <input type="text" class="form-control" @bind="housing.address" id="address">
-    </div>
-    <div class="form-group">
-        <label for="initialPrice">Initial Price</label>
-        <input type="number" class="form-control" @bind="housing.initialPrice" id="initialPrice">
-    </div>
-    <div class="form-group">
-        <label for="livingArea">Living Area (sq ft)</label>
-        <input type="number" class="form-control" @bind="housing.livingArea" id="livingArea">
-    </div>
-    <div class="form-group">
-        <label for="additionalArea">Additional Area (sq ft)</label>
-        <input type="number" class="form-control" @bind="housing.additionalArea" id="additionalArea">
-    </div>
-    <div class="form-group">
-        <label for="plotArea">Plot Area (sq ft)</label>
-        <input type="number" class="form-control" @bind="housing.plotArea" id="plotArea">
-    </div>
-    <div class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" @bind="housing.description" id="description"></textarea>
-    </div>
-    <div class="form-group">
-        <label for="numberOfRooms">Number of Rooms</label>
-        <input type="number" class="form-control" @bind="housing.numberOfRooms" id="numberOfRooms">
-    </div>
-    <div class="form-group">
-        <label for="monthlyFee">Monthly Fee</label>
-        <input type="number" class="form-control" @bind="housing.monthlyFee" id="monthlyFee">
-    </div>
-    <div class="form-group">
-        <label for="annualOperatingCost">Annual Operating Cost</label>
-        <input type="number" class="form-control" @bind="housing.annualOperatingCost" id="annualOperatingCost">
-    </div>
-    <div class="form-group">
-        <label for="yearBuilt">Year Built</label>
-        <input type="number" class="form-control" @bind="housing.yearBuilt" id="yearBuilt">
-    </div>
+    <form @onsubmit="HandleSubmit">
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" @bind="housing.address" id="address">
+        </div>
+        <div class="form-group">
+            <label for="initialPrice">Initial Price</label>
+            <input type="number" class="form-control" @bind="housing.initialPrice" id="initialPrice">
+        </div>
+        <div class="form-group">
+            <label for="livingArea">Living Area (sq ft)</label>
+            <input type="number" class="form-control" @bind="housing.livingArea" id="livingArea">
+        </div>
+        <div class="form-group">
+            <label for="additionalArea">Additional Area (sq ft)</label>
+            <input type="number" class="form-control" @bind="housing.additionalArea" id="additionalArea">
+        </div>
+        <div class="form-group">
+            <label for="plotArea">Plot Area (sq ft)</label>
+            <input type="number" class="form-control" @bind="housing.plotArea" id="plotArea">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" @bind="housing.description" id="description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="numberOfRooms">Number of Rooms</label>
+            <input type="number" class="form-control" @bind="housing.numberOfRooms" id="numberOfRooms">
+        </div>
+        <div class="form-group">
+            <label for="monthlyFee">Monthly Fee</label>
+            <input type="number" class="form-control" @bind="housing.monthlyFee" id="monthlyFee">
+        </div>
+        <div class="form-group">
+            <label for="annualOperatingCost">Annual Operating Cost</label>
+            <input type="number" class="form-control" @bind="housing.annualOperatingCost" id="annualOperatingCost">
+        </div>
+        <div class="form-group">
+            <label for="yearBuilt">Year Built</label>
+            <input type="number" class="form-control" @bind="housing.yearBuilt" id="yearBuilt">
+        </div>
 
-    <div class="form-group">
-        <label for="municipality">Municipality</label>
-        <select class="form-control" @bind="housing.municipalityId">
-            <option value="">Select Municipality</option>
-            @if (housingList != null)
-            {
-                @foreach (var municipality in housingList.DistinctBy(b => b.municipalityId))
+        <div class="form-group">
+            <label for="municipality">Municipality</label>
+            <select class="form-control" @bind="housing.municipalityId">
+                <option value="">Select Municipality</option>
+                @if (housingList != null)
                 {
-                    if (municipality != null && municipality.municipality != null)
+                    @foreach (var municipality in housingList.DistinctBy(b => b.municipalityId))
                     {
-                        <option value="@municipality.id">@municipality.municipality.name</option>
+                        if (municipality != null && municipality.municipality != null)
+                        {
+                            <option value="@municipality.id">@municipality.municipality.name</option>
+                        }
                     }
                 }
-            }
-            else
-            {
-                <option value="">Loading...</option>
-            }
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="category">Category</label>
-        <select class="form-control" @bind="housing.categoryId">
-            <option value="">Select Category</option>
-            @if (housingList != null)
-            {
-                @foreach (var category in housingList.DistinctBy(b => b.categoryId))
+                else
                 {
-                    if (category != null && category.category != null)
+                    <option value="">Loading...</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" @bind="housing.categoryId">
+                <option value="">Select Category</option>
+                @if (housingList != null)
+                {
+                    @foreach (var category in housingList.DistinctBy(b => b.categoryId))
                     {
-                        <option value="@category.id">@category.category.name</option>
+                        if (category != null && category.category != null)
+                        {
+                            <option value="@category.id">@category.category.name</option>
+                        }
                     }
                 }
-            }
-            else
+                else
+                {
+                    <option value="">Loading...</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="images">Images URLs</label>
+            <input type="text" class="form-control" @bind="imageUrls" id="images">
+        </div>
+        <button class="btn btn-primary" @onclick="NavigateBack">Back</button>
+        &nbsp;
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+        @if (!string.IsNullOrWhiteSpace(imageUrls))
+        {
+            @foreach (var imageUrl in imageUrls.Split(','))
             {
-                <option value="">Loading...</option>
+                <div>
+                    <img src="@imageUrl" alt="Housing Image">
+                </div>
             }
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="images">Images URLs</label>
-        <input type="text" class="form-control" @bind="imageUrls" id="images">
-    </div>
-    <button class="btn btn-primary" @onclick="NavigateBack">Back</button>
-&nbsp;
-<button type="submit" class="btn btn-primary">Submit</button>
-
-    @if (!string.IsNullOrWhiteSpace(imageUrls))
-    {
-        @foreach (var imageUrl in imageUrls.Split(','))
+        }
+        else
         {
             <div>
-                <img src="@imageUrl" alt="Housing Image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg" alt="Default Housing Image">
             </div>
         }
-    }
-    else
-    {
-        <div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg" alt="Default Housing Image">
-        </div>
-    }
 
-    
-</form>
+
+    </form>
 </div>
 <input type="hidden" id="brokerId" @bind="housing.brokerId" />
 
@@ -177,9 +174,9 @@
         }
     }
     private void NavigateBack()
-{
-    NavigationManager.NavigateTo("javascript:history.back()");
-}
+    {
+        NavigationManager.NavigateTo("javascript:history.back()");
+    }
 
 
 }
