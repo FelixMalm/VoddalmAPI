@@ -12,13 +12,12 @@
 else
 {
     <div class="container">
-        
         <div class="broker-details">
             <div class="section">
                 <div class="broker-info">
                     @if (!string.IsNullOrEmpty(broker.imageUrl))
                     {
-                        <img src="@broker.imageUrl" alt="Broker Image" />
+                        <img src="@broker.imageUrl" alt="Broker Image" class="broker-image" />
                     }
                     else
                     {
@@ -46,7 +45,7 @@ else
                             @if (housing.images != null && housing.images.Any())
                             {
                                 <a href="@($"HousingDetails/{housing.id}")">
-                                    <img src="@housing.images[0]" alt="Housing Image" />
+                                    <img src="@housing.images[0]" alt="Housing Image" class="housing-image" />
                                 </a>
                             }
                             else
@@ -58,7 +57,9 @@ else
                 }
             </div>
         </div>
+
     </div>
+
 }
 
 <!-- Button to navigate to previous page -->
