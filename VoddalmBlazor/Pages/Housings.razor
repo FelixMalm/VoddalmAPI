@@ -3,31 +3,35 @@
 @using System.Text.Json
 @using VoddalmBlazor.Models
 @inject HttpClient httpClient
-@* @attribute [Authorize(Roles = "User")] *@
-<!-- Author Kim Jonsson -->
 
-<h1>Housings</h1>
+
 
 <div class="filters">
     <input type="text" placeholder="Search" @bind="searchTerm" @oninput="FilterHousings" />
 
+    <div class="filter-group">
+        <label for="municipality">Municipalities:</label>
+        <div class="filter-options" id="municipality">
+            @foreach (var municipality in municipalities)
+            {
+                <label>
+                    <input type="checkbox" value="@municipality" @onchange="@(e => ToggleMunicipalityFilter(municipality, e))" /> @municipality
+                </label>
+            }
+        </div>
+    </div>
 
-
-    <select @bind="selectedMunicipality">
-        <option value="">All Municipalities</option>
-        @foreach (var municipality in municipalities)
-        {
-            <option value="@municipality">@municipality</option>
-        }
-    </select>
-
-    <select @bind="selectedCategory">
-        <option value="">All Categories</option>
-        @foreach (var category in categories)
-        {
-            <option value="@category">@category</option>
-        }
-    </select>
+    <div class="filter-group">
+        <label for="category">Categories:</label>
+        <div class="filter-options" id="category">
+            @foreach (var category in categories)
+            {
+                <label>
+                    <input type="checkbox" value="@category" @onchange="@(e => ToggleCategoryFilter(category, e))" /> @category
+                </label>
+            }
+        </div>
+    </div>
 </div>
 
 @if (housingList == null)
@@ -37,10 +41,7 @@
 else
 {
     <div class="housing-list">
-        @{
-            var activeHousings = filteredHousings.Where(h => h.IsActive);
-        }
-        @foreach (var housing in activeHousings)
+        @foreach (var housing in GetFilteredHousings().Where(h => h.IsActive))
         {
             <div class="housing-item">
                 <a href="HousingDetails/@housing.id.ToString()">
@@ -74,7 +75,6 @@ else
             </div>
         }
     </div>
-
 }
 
 @code {
@@ -82,8 +82,8 @@ else
     private List<Broker> brokerList;
     private List<Agency> agencyList;
     private string searchTerm = "";
-    private string selectedMunicipality = "";
-    private string selectedCategory = "";
+    private List<string> selectedMunicipalities = new List<string>();
+    private List<string> selectedCategories = new List<string>();
     private string[] municipalities = { "Ale", "Alingsås", "Alvesta", "Aneby", "Arboga" };
     private string[] categories = { "Apartment", "Villas", "New production", "Leisure house" };
 
@@ -107,46 +107,72 @@ else
         }
     }
 
-
-    private IEnumerable<Housing> filteredHousings
+    private IEnumerable<Housing> GetFilteredHousings()
     {
-        get
+        var filtered = housingList;
+
+        if (!string.IsNullOrEmpty(searchTerm))
         {
-            var filtered = housingList.AsEnumerable();
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                filtered = filtered.Where(h =>
-                    h.id.ToString().Contains(searchTerm) ||
-                    h.address.Contains(searchTerm) ||
-                    h.initialPrice.ToString().Contains(searchTerm) ||
-                    h.livingArea.ToString().Contains(searchTerm) ||
-                    h.broker.agency.name.Contains(searchTerm) ||
-                    h.broker.firstName.Contains(searchTerm) ||
-                    h.broker.lastName.Contains(searchTerm) ||
-                    h.municipality.name.Contains(searchTerm) ||
-                    h.category.name.Contains(searchTerm)
-                );
-            }
-
-            if (!string.IsNullOrEmpty(selectedMunicipality))
-            {
-                filtered = filtered.Where(h => h.municipality.name == selectedMunicipality);
-            }
-
-            if (!string.IsNullOrEmpty(selectedCategory))
-            {
-                filtered = filtered.Where(h => h.category.name == selectedCategory);
-            }
-
-            return filtered;
+            filtered = filtered.Where(h =>
+                h.id.ToString().Contains(searchTerm) ||
+                h.address.Contains(searchTerm) ||
+                h.initialPrice.ToString().Contains(searchTerm) ||
+                h.livingArea.ToString().Contains(searchTerm) ||
+                h.broker.agency.name.Contains(searchTerm) ||
+                h.broker.firstName.Contains(searchTerm) ||
+                h.broker.lastName.Contains(searchTerm) ||
+                h.municipality.name.Contains(searchTerm) ||
+                h.category.name.Contains(searchTerm)
+            ).ToList();
         }
+
+        if (selectedMunicipalities.Any())
+        {
+            filtered = filtered.Where(h => selectedMunicipalities.Contains(h.municipality.name)).ToList();
+        }
+
+        if (selectedCategories.Any())
+        {
+            filtered = filtered.Where(h => selectedCategories.Contains(h.category.name)).ToList();
+        }
+
+        return filtered;
+    }
+
+    private void ToggleMunicipalityFilter(string municipality, ChangeEventArgs e)
+    {
+        if ((bool)e.Value)
+        {
+            if (!selectedMunicipalities.Contains(municipality))
+            {
+                selectedMunicipalities.Add(municipality);
+            }
+        }
+        else
+        {
+            selectedMunicipalities.Remove(municipality);
+        }
+        FilterHousings();
+    }
+
+    private void ToggleCategoryFilter(string category, ChangeEventArgs e)
+    {
+        if ((bool)e.Value)
+        {
+            if (!selectedCategories.Contains(category))
+            {
+                selectedCategories.Add(category);
+            }
+        }
+        else
+        {
+            selectedCategories.Remove(category);
+        }
+        FilterHousings();
     }
 
     private void FilterHousings()
     {
         StateHasChanged();
     }
-
-
 }

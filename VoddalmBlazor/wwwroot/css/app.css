@@ -12,8 +12,8 @@ a, .btn-link {
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #26b050;
+    border-color: #fff;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -101,3 +101,19 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+.custom-sidebar {
+    background-color: rgb(85, 154, 71);
+    
+}
+
+
+.custom-header {
+    background-color: rgb(85, 154, 71);
+    /* Add other styling properties as needed */
+}
+
+
+
+
+
+
