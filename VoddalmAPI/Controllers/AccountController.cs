@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using VoddalmAPI.Data.Interfaces;
 using VoddalmAPI.Data.Models;
-using VoddalmAPI.Data.Repositories;
 
 namespace VoddalmAPI.Controllers
 {

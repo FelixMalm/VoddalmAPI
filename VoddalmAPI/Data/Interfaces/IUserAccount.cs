@@ -1,6 +1,6 @@
 ﻿using VoddalmAPI.Data.Models;
 using static VoddalmAPI.Data.Models.ServiceResponses;
-
+//Linus
 namespace VoddalmAPI.Data.Interfaces
 {
     public interface IUserAccount

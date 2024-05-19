@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace VoddalmAPI.Data.Models
+    //Linus
 {
     public class UserDTO
     {
