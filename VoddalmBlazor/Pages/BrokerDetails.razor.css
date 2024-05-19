@@ -70,3 +70,12 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+.broker-image {
+    max-width: 400px;
+    max-height: 450px;
+}
+.housing-image {
+    max-width: fit-content;
+    max-height: 200px; /* Adjust height as needed */
+}
+
