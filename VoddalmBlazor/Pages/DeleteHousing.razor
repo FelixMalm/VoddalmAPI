@@ -3,7 +3,7 @@
 @using VoddalmBlazor.Models
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
-
+<!-- Author Kim Jonsson  // -->
 <h3>Delete Your Housing</h3>
 
 @if (housing != null)
@@ -33,7 +33,7 @@ else
         housing = await httpClient.GetFromJsonAsync<Housing>($"https://localhost:7046/api/Housings/{HousingId}");
     }
 
-    private async Task DeleteHousingAction() // Renamed the method to DeleteHousingAction
+    private async Task DeleteHousingAction() 
     {
         try
         {
@@ -44,19 +44,19 @@ else
             HttpResponseMessage response = await httpClient.PutAsJsonAsync($"https://localhost:7046/api/Housings/{housing.id}", housing);
             response.EnsureSuccessStatusCode();
 
-            // Redirect to a confirmation page or home page
+            
             NavigationManager.NavigateTo("/BrokerLoggedIn");
         }
         catch (Exception ex)
         {
-            // Handle error, e.g., display error message
+            
             Console.WriteLine($"Error deleting housing: {ex.Message}");
         }
     }
 
     private void Cancel()
     {
-        // Redirect to the home page or previous page
+        
         NavigationManager.NavigateTo("/");
     }
 }

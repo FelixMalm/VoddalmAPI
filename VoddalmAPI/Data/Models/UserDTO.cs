@@ -2,6 +2,7 @@
 namespace VoddalmAPI.Data.Models
     //Linus
 {
+    //Author Linus
     public class UserDTO
     {
         public string? Id { get; set; } = string.Empty;

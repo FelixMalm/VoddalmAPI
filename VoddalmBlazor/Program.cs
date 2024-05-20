@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
 using VoddalmBlazor.Services.Base;
-using System.IdentityModel.Tokens.Jwt; // Add this namespace
+using System.IdentityModel.Tokens.Jwt; 
 
-//Author Felix Malm
+//Author Felix Malm && Kim Jonsson
 
 namespace VoddalmBlazor
 {

@@ -2,6 +2,7 @@
 
 namespace VoddalmAPI.Data.Interfaces
 {
+    //Author Kim
     public interface IHousing
     {
         Task<IEnumerable<Housing>> GetHousingsAsync();

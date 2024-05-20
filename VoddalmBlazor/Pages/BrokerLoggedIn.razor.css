@@ -1,10 +1,10 @@
-﻿.associated-housings {
+﻿.associated-housings { /*Author Kim*/
     margin-top: 5rem;
 }
 
 .housing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted width */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
     gap: 20px;
 }
 
@@ -22,8 +22,8 @@
 
     .housing-item .card-img-top {
         width: 100%;
-        height: auto; /* Adjusted height */
-        max-height: 50%; /* Maximum height for the image */
+        height: auto; 
+        max-height: 50%; 
         object-fit: cover;
     }
 
@@ -36,7 +36,7 @@
 }
 
 .button-group {
-    margin-top: auto; /* Align buttons at the bottom */
+    margin-top: auto; 
     display: flex;
     justify-content: space-between;
     margin-top: 10px;

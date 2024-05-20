@@ -89,10 +89,10 @@
                 </select>
             </div>
 
-            <!-- Submit button -->
+            
             <button type="submit" class="btn btn-primary">Update Housing</button>
 
-            <!-- Display error message if any -->
+            
             @if (!string.IsNullOrEmpty(errorMessage))
             {
                 <div class="alert alert-danger mt-3" role="alert">
@@ -109,28 +109,28 @@
     private string errorMessage;
     private List<Broker> brokers;
     private List<Housing> housingList;
-    private string imageUrls; // Property to hold the current image URLs
+    private string imageUrls; 
 
     [Parameter]
     public int HousingId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        // Fetch data for dropdown lists from your API
+        
         brokers = await httpClient.GetFromJsonAsync<List<Broker>>("https://localhost:7046/api/Broker");
         housingList = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
 
         try
         {
-            // Fetch housing details based on the provided ID
+            
             housing = await httpClient.GetFromJsonAsync<Housing>($"https://localhost:7046/api/Housings/{HousingId}");
 
-            // Initialize the image URLs property with the current housing's image URLs
+            
             imageUrls = housing.images != null ? string.Join(",", housing.images) : "";
         }
         catch (Exception ex)
         {
-            // Redirect to an error page or handle the error as needed
+            
             NavigationManager.NavigateTo("/error");
         }
     }
@@ -139,22 +139,22 @@
     {
         try
         {
-            // Split the string into individual URLs
+            
             var updatedImageUrls = imageUrls.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-            // Assign the list of URLs to the images property
+            
             housing.images = updatedImageUrls.ToList();
 
             HttpResponseMessage response = await httpClient.PutAsJsonAsync($"https://localhost:7046/api/Housings/{housing.id}", housing);
-            response.EnsureSuccessStatusCode(); // Ensure success status code
+            response.EnsureSuccessStatusCode(); 
 
-            // Set success message
+            
             errorMessage = "Housing details updated successfully!";
             NavigationManager.NavigateTo("/BrokerLoggedIn");
         }
         catch (Exception ex)
         {
-            // Set error message
+            
             errorMessage = ex.Message;
         }
     }

@@ -19,6 +19,7 @@
 
 namespace VoddalmBlazor.Services.Base
 {
+    //Author Felix Malm
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]

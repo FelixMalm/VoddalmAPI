@@ -9,6 +9,7 @@ using VoddalmAPI.Data.Models;
 
 namespace VoddalmAPI.Controllers
 {
+    // Author Kim, Linus, Felix
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController/*(IUserAccount userAccount)*/ : ControllerBase

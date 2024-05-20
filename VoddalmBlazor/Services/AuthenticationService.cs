@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace BlazorWasmAuthentication.Services
 {
+    //Author Felix Malm && Kim Jonsson
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IClient httpClient;

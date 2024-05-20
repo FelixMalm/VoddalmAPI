@@ -10,7 +10,7 @@ namespace VoddalmAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AgencyController : ControllerBase // Author Felix
+    public class AgencyController : ControllerBase // Author Felix, Kim
     {
         private readonly IAgency AgencyRepo;
         private readonly IBroker BrokerRepo;
@@ -39,7 +39,7 @@ namespace VoddalmAPI.Controllers
             return Ok(agency);
         }
 
-        [HttpPost] // Author Felix
+        [HttpPost] 
         public async Task<ActionResult<Agency>> Post([FromBody] AgencyDto agencyDto)
         {
             try
@@ -71,13 +71,12 @@ namespace VoddalmAPI.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
-                // Handle the exception appropriately (e.g., return a 500 Internal Server Error response)
+                
                 return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpPut("{id}")] // Author Felix
+        [HttpPut("{id}")] 
         public async Task<IActionResult> Put(int id, [FromBody] AgencyDto agencyDto)
         {
             try
@@ -106,10 +105,7 @@ namespace VoddalmAPI.Controllers
                     }
                     broker.Agency = agency;
                 }
-                //else
-                //{
-                //    agency.Brokers = null; // Remove association if BrokerId is not provided
-                //}
+               
 
                 await AgencyRepo.UpdateAgencyAsync(agency);
                 return NoContent();
@@ -135,7 +131,7 @@ namespace VoddalmAPI.Controllers
         }
     }
 
-    public class AgencyDto // Author Felix
+    public class AgencyDto 
     {
         [Required]
         public string Name { get; set; }

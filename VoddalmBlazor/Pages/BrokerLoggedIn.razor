@@ -11,11 +11,11 @@
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ILocalStorageService localStorage
-@* @attribute [Authorize(Roles = "User")] *@
+@attribute [Authorize(Roles = "User")] 
 
 
 
-<!-- Author Kim Jonsson -->
+<!-- Author Kim Jonsson & Felix Malm // -->
 
 <h3>My Information</h3>
 
@@ -23,12 +23,12 @@
 {
     <div class="container">
         <div class="row">
-            <!-- Image of the logged-in broker -->
+            
             <div class="col-md-4 mb-3">
                 <img src="@broker.imageUrl" alt="Broker Image" class="img-fluid rounded-circle">
             </div>
 
-            <!-- Input fields for broker properties -->
+            
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="firstName">First Name</label>
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <!-- Success message -->
+        
         @if (successMessage != null)
         {
             <div class="alert alert-success" role="alert">
@@ -88,13 +88,13 @@ else
                             <img src="@housingItem.images.FirstOrDefault()" class="card-img-top" alt="Housing Image">
                             <div class="card-body housing-info">
                                 <h5 class="card-title">
-                                    <!-- Wrapped housing address in <a> tag -->
+                                    
                                     <a href="/HousingDetails/@housingItem.id">@housingItem.address</a>
                                 </h5>
                                 <div class="button-group">
-                                    <!-- Update button -->
+                                    
                                     <a class="btn btn-primary mr-2" href="/updateHousing/@housingItem.id">Update</a>
-                                    <!-- Delete button -->
+                                    
                                     <a class="btn btn-danger" href="/deleteHousing/@housingItem.id">Delete</a>
                                 </div>
                             </div>
@@ -120,7 +120,7 @@ else
                             <img src="@housingItem.images.FirstOrDefault()" class="card-img-top" alt="Housing Image">
                             <div class="card-body housing-info">
                                 <h5 class="card-title">
-                                    <!-- Wrapped housing address in <a> tag -->
+                                    
                                     <a href="/HousingDetails/@housingItem.id">@housingItem.address</a>
                                 </h5>
                                 <p>This housing is currently inactive.</p>
@@ -148,7 +148,7 @@ else
 @code {
     private Broker broker;
     private List<Housing> housing;
-    private List<Housing> associatedHousings; // Change type to List<Housing>
+    private List<Housing> associatedHousings; 
     private string currentUserId;
     private string successMessage;
 
@@ -156,7 +156,7 @@ else
     {
         try
         {
-            // Get the current user ID
+            
             currentUserId = await localStorage.GetItemAsync<string>("userId");
 
             if (currentUserId != null)
@@ -164,7 +164,7 @@ else
                 broker = await httpClient.GetFromJsonAsync<Broker>($"https://localhost:7046/api/Broker/{currentUserId}");
                 housing = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
 
-                // Filter the list of housings associated with the current broker
+                
                 associatedHousings = housing.Where(h => h.broker.id.ToString() == currentUserId).ToList();
 
 
@@ -222,8 +222,7 @@ else
             HttpResponseMessage response = await httpClient.PutAsJsonAsync($"https://localhost:7046/api/Housings/{housing.id}", housing);
             response.EnsureSuccessStatusCode();
 
-            // Refresh the page or update the list of housings
-            // For simplicity, you can reload the page
+           
             StateHasChanged();
         }
         catch (Exception ex)

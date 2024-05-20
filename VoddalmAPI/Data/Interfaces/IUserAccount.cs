@@ -3,6 +3,7 @@ using static VoddalmAPI.Data.Models.ServiceResponses;
 //Linus
 namespace VoddalmAPI.Data.Interfaces
 {
+    //Linus
     public interface IUserAccount
     {
         Task<GeneralResponse> CreateAccount(UserDTO userDTO);

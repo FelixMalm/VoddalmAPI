@@ -6,7 +6,7 @@ using VoddalmAPI.Data.Interfaces;
 using VoddalmAPI.Data.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace VoddalmAPI.Controllers
+namespace VoddalmAPI.Controllers //Author Felix o Kim
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -39,7 +39,7 @@ namespace VoddalmAPI.Controllers
             return Ok(broker);
         }
 
-        [HttpPost] //Author Felix
+        [HttpPost] 
         public async Task<ActionResult<Broker>> PostBroker([FromBody] BrokerDto brokerDto)
         {
             try
@@ -76,7 +76,7 @@ namespace VoddalmAPI.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
+               
                 Console.WriteLine($"Error adding broker: {ex.Message}");
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
@@ -88,42 +88,42 @@ namespace VoddalmAPI.Controllers
         {
             try
             {
-                // Check if the model state is valid
+                
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
 
-                // Attempt to find the broker by ID
+                
                 var broker = await brokerRepo.GetBrokerByIdAsync(id);
                 if (broker == null)
                 {
-                    // Return 404 Not Found if broker is not found
+                    
                     return NotFound($"Broker with Id {id} not found");
                 }
 
-                // Update broker properties
+                
                 broker.FirstName = brokerDto.FirstName;
                 broker.LastName = brokerDto.LastName;
                 broker.Email = brokerDto.Email;
                 broker.PhoneNumber = brokerDto.PhoneNumber;
                 broker.ImageUrl = brokerDto.ImageUrl;
-                broker.NormalizedEmail = brokerDto.Email.ToUpper(); // Normalize email
-                broker.NormalizedUserName = brokerDto.Email.ToUpper(); // Normalize username
+                broker.NormalizedEmail = brokerDto.Email.ToUpper(); 
+                broker.NormalizedUserName = brokerDto.Email.ToUpper(); 
                 broker.UserName = brokerDto.UserName;
 
-                // Update the broker entity in the repository
+               
                 await brokerRepo.UpdateBrokerAsync(broker);
 
-                // Return 204 No Content if update is successful
+                
                 return NoContent();
             }
             catch (Exception ex)
             {
-                // Log the exception
+               
                 Console.WriteLine($"Error updating broker: {ex.Message}");
 
-                // Return 500 Internal Server Error for any other exceptions
+               
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -145,7 +145,7 @@ namespace VoddalmAPI.Controllers
     }
 
 
-    public class BrokerDto //Author Felix
+    public class BrokerDto 
     {
         [Required]
         public string FirstName { get; set; }

@@ -1,9 +1,9 @@
-﻿﻿.broker-list {
+﻿﻿.broker-list { /*Author Kim*/
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Three brokers per row */
-    gap: 20px; /* Add gap between broker items */
-    justify-items: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    align-items: center;
     text-align: center;
 }
 
@@ -42,10 +42,10 @@
         }
 
 .broker-image img {
-    width: 100%; /* Ensure image fills its container */
-    height: auto; /* Maintain aspect ratio */
-    max-width: 200px; /* Limit image width */
-    max-height: 200px; /* Limit image height */
+    width: 100%; 
+    height: auto; 
+    max-width: 200px; 
+    max-height: 200px; 
     border-radius: 50%;
     object-fit: cover;
 }
