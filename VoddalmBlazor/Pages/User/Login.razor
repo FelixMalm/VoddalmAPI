@@ -46,7 +46,7 @@
 
     async Task HandleLogin()
     {
-        errorMessage = ""; // Clear any previous error messages
+        errorMessage = ""; 
 
         try
         {
@@ -57,9 +57,7 @@
                 var jwtToken = await LocalStorage.GetItemAsStringAsync("accessToken");
 
 
-                // tokenExpirationTime = GetTokenExpiration(jwtToken);
 
-                // Start timer to update UI with remaining time
                 _timer = new Timer(state => InvokeAsync(StateHasChanged), null, 1000, 1000);
                 NavigationManager.NavigateTo("/");
             }
@@ -71,24 +69,10 @@
         catch (ApiException aex)
         {
             errorMessage = "An error occurred during authentication. Please try again later.";
-            // Log or handle the exception as needed
+            
         }
     }
 
-    // DateTime? GetTokenExpiration(string token)
-    // {
-    //     var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
-    //     var jwtToken = handler.ReadJwtToken(token);
-    //     var exp = jwtToken.Claims.FirstOrDefault(c => c.Type == "exp")?.Value;
-
-    //     if (long.TryParse(exp, out var expSeconds))
-    //     {
-    //         var expirationTime = DateTimeOffset.FromUnixTimeSeconds(expSeconds).UtcDateTime;
-    //         return expirationTime;
-    //     }
-
-    //     return null;
-    // }
 
     string GetTimeRemaining(DateTime expirationTime)
     {

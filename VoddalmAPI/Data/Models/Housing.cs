@@ -2,7 +2,7 @@
 
 namespace VoddalmAPI.Data.Models
 {
-    public class Housing //Author Kim
+    public class Housing //Author Kim o Linus A
     {
         [Key]
         public int Id { get; set; }

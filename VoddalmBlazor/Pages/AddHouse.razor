@@ -6,7 +6,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using VoddalmBlazor.Models
 @inject NavigationManager NavigationManager
-<!-- Author Kim Jonsson // -->
+<!-- Author Kim Jonsson & Felix Malm // -->
 @if (errorMessage != null)
 {
     <div class="alert alert-danger">@errorMessage</div>
@@ -130,7 +130,7 @@
     private Housing housing = new Housing();
     private string imageUrls;
     private string errorMessage;
-    private string brokerId; // Add this variable to store the current broker's ID
+    private string brokerId; 
 
     private List<Broker> brokers;
     private List<Housing> housingList;
@@ -141,13 +141,13 @@
     {
         try
         {
-            // Retrieve broker ID from query parameters
+            
             brokerId = NavigationManager.Uri.Split("?")[1].Split("=")[1];
 
-            // Fetch broker details using the retrieved ID
+            
             broker = await httpClient.GetFromJsonAsync<Broker>($"https://localhost:7046/api/Broker/{brokerId}");
 
-            // Fetch housing list to load municipality and category
+            
             housingList = await httpClient.GetFromJsonAsync<List<Housing>>("https://localhost:7046/api/Housings");
         }
         catch (Exception ex)
@@ -161,11 +161,11 @@
         try
         {
             housing.images = imageUrls?.Split(',').ToList();
-            housing.brokerId = brokerId; // Set the broker ID for the housing object
+            housing.brokerId = brokerId; 
             HttpResponseMessage response = await httpClient.PostAsJsonAsync("https://localhost:7046/api/Housings", housing);
-            response.EnsureSuccessStatusCode(); // Ensure success status code
+            response.EnsureSuccessStatusCode(); 
 
-            // Navigate to the confirmation page with the housing object as a query parameter
+            
             NavigationManager.NavigateTo("/BrokerLoggedIn");
         }
         catch (Exception ex)

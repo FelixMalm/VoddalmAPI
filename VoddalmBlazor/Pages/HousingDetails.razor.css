@@ -1,4 +1,4 @@
-﻿.container {
+﻿.container { /*Author Kim*/
     max-width: 800px;
     margin: 0 auto;
 }
@@ -34,7 +34,7 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     position: relative;
-    height: 400px; /* Fixed height for the slider */
+    height: 400px; 
 }
 
 .slide {

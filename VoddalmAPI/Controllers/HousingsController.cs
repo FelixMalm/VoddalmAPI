@@ -7,7 +7,7 @@ using VoddalmAPI.Data.Models;
 
 namespace VoddalmAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] // Author Felix o Kim J
     [ApiController]
     public class HousingsController : ControllerBase
     {
@@ -38,7 +38,7 @@ namespace VoddalmAPI.Controllers
             return Ok(housing);
         }
 
-        [HttpPost] // Author Felix
+        [HttpPost] 
         public async Task<ActionResult<Housing>> PostHousing([FromBody] HousingDto housingDto)
         {
             try
@@ -84,13 +84,13 @@ namespace VoddalmAPI.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
+                
                 return StatusCode(500, "Internal server error");
             }
         }
 
 
-        [HttpPut("{id}")] // Author Felix
+        [HttpPut("{id}")] 
         public async Task<IActionResult> PutHousing(int id, [FromBody] HousingDto housingDto)
         {
             try
@@ -117,7 +117,7 @@ namespace VoddalmAPI.Controllers
                 housing.AnnualOperatingCost = housingDto.AnnualOperatingCost;
                 housing.YearBuilt = housingDto.YearBuilt;
                 housing.CategoryId = housingDto.CategoryId;
-                housing.BrokerId = housingDto.BrokerId; // Assigning directly as BrokerId is already a string
+                housing.BrokerId = housingDto.BrokerId; 
                 housing.MunicipalityId = housingDto.MunicipalityId;
                 housing.Images = housingDto.Images;
                 housing.IsActive = housingDto.IsActive;
@@ -127,7 +127,7 @@ namespace VoddalmAPI.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
+                
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -149,7 +149,7 @@ namespace VoddalmAPI.Controllers
         }
     }
 
-    public class HousingDto //Author Felix
+    public class HousingDto 
     {
         [Required]
         public string Address { get; set; }

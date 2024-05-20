@@ -1,5 +1,6 @@
 ﻿namespace VoddalmBlazor.Services.Base
 {
+    //Author Felix Malm
     public class Response<T>
     {
         public string Message { get; set; }

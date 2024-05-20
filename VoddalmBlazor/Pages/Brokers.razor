@@ -4,7 +4,7 @@
 @using VoddalmBlazor.Models
 @inject HttpClient httpClient
 
-
+<!-- Author Kim Jonsson// -->
 
 @if (brokerList == null)
 {
@@ -42,7 +42,7 @@ else
         }
         catch (Exception ex)
         {
-            // Handle exception (e.g., log, display error message)
+            
             Console.WriteLine($"Error fetching brokers: {ex.Message}");
         }
     }

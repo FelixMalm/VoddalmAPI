@@ -5,6 +5,7 @@ namespace VoddalmAPI.Data.Models
 {
     public class Broker : IdentityUser
     {
+        //Author Kim Jonsson // Felix
         
         [Required]
         public string FirstName { get; set; }

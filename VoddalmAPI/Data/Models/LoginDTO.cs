@@ -3,6 +3,7 @@ namespace VoddalmAPI.Data.Models
 {
     public class LoginDTO
     {
+        //Author Linus o Felix
         [Required]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]

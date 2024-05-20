@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VoddalmBlazor.Models //Kim
+namespace VoddalmBlazor.Models // Author Kim Jonsson o Felix Malm
 {
 
 

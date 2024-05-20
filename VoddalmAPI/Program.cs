@@ -13,7 +13,7 @@ using VoddalmAPI.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Felix
+//Author Kim o felix
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -68,7 +68,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IHousing, HousingRepository>();
 builder.Services.AddScoped<IAgency, AgencyRepository>();
 builder.Services.AddScoped<IBroker, BrokerRepository>();
-//builder.Services.AddScoped<IUserAccount, AccountRepository>();
+
 
 var app = builder.Build();
 
@@ -93,7 +93,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope()) //Author Kim
+using (var scope = app.Services.CreateScope()) 
 {
     var services = scope.ServiceProvider;
     var dbContext = services.GetRequiredService<ApplicationDbContext>();

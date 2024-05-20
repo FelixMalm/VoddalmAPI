@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-//Author Felix Malm
+//Author Felix Malm o Kim Jonssson
 
 namespace BlazorWasmAuthentication.Handlers
 {
@@ -49,7 +49,7 @@ namespace BlazorWasmAuthentication.Handlers
             }
             catch (Exception ex)
             {
-                // Handle token reading error
+                
                 Console.WriteLine($"Error reading JWT token: {ex.Message}");
                 return new AuthenticationState(user);
             }

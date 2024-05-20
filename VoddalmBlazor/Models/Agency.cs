@@ -1,6 +1,6 @@
 ﻿namespace VoddalmBlazor.Models
 {
-    public class Agencies
+    public class Agencies // Author Kim Jonsson
     {
         public int id { get; set; }
         public string name { get; set; }
